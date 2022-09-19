@@ -6,6 +6,7 @@ const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [surname, setSurname] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [msg, setMsg] = useState('');
     const history = useHistory();
@@ -24,10 +25,11 @@ const Register = () => {
         try {
             await axios.post('http://localhost:5000/users', {
                 name: name,
+                surname: surname,
                 email: email,
                 password: password,
                 confPassword: confPassword,
-		role: role
+		        role: role
             });
             history.push("/");
         } catch (error) {
@@ -50,6 +52,13 @@ const Register = () => {
                                     <div className="controls">
                                         <input type="text" className="input" placeholder="Name"
                                             value={name} onChange={(e) => setName(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="field mt-5">
+                                    <label className="label">Surname</label>
+                                    <div className="controls">
+                                        <input type="text" className="input" placeholder="Surname"
+                                            value={surname} onChange={(e) => setSurname(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="field mt-5">
