@@ -13,39 +13,33 @@ const Navbar = () => {
             console.log(error);
         }
     }
-
+    
     return (
-        <nav className="navbar is-light" role="navigation" aria-label="main navigation">
-            <div className="container">
-                <div className="navbar-brand">
+      <>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <a class="navbar-brand" href="#">Adelicia's Restaurant</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
 
-                    <a href="/" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+		<a class="nav-link" href="#">Catalogo<span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+		<a class="nav-link" href="#">Pedidos</a>
+	      </li>
+	    </ul>
+	    <form class="form-inline my-2 my-lg-0">
+	      <button class="btn btn-outline-danger my-2 my-sm-0" type="button" onClick={Logout}>Logout</button>
+	    </form>
+	  </div>
+	</nav>
+      </>
+    );
 
-                <div id="navbarBasicExample" className="navbar-menu">
-                    <div className="navbar-start">
-                        <a href="/" className="navbar-item">
-                            Home
-                        </a>
-                    </div>
-
-                    <div className="navbar-end">
-                        <div className="navbar-item">
-                            <div className="buttons">
-                                <button onClick={Logout} className="button is-light">
-                                    Log Out
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    )
+    
 }
 
 export default Navbar
