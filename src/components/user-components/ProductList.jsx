@@ -62,14 +62,15 @@ const ProductList = () => {
         <div className="container mt-5">
             <h4>Bienvenido a Adelicia's Restaurant': <b>{name} {surname}</b></h4>
 
-	    <div className="card-deck mt-4">
+      <div className="card-deck" style={{marginTop: 100, marginBottom: 20}}>
                     {products.map((prd) => (
 		      <div className="card" key={prd.id} style={{width:18 + "rem"}}>
 		      <img src={prd.imagen} style={{height: 200, objectFit: 'cover'}} className="card-img-top" alt="..." />
 			<div className="card-body">
 			  <h5 className="card-title">{prd.nombre}</h5>
-			  <p className="card-text">{prd.descripcion}</p>
-			  <button href="#" className="btn btn-primary">Agregar Pedido</button>
+			  <p className="card-text text-justify">{prd.descripcion}</p>
+			  <h3 >Q.{prd.precio}</h3>
+			  <button href="#" className="btn btn-warning btn-block">Agregar  <i className="fas fa-cart-shopping"></i> </button>
 			</div>
 		      </div>
                     ))}
