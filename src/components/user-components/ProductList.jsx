@@ -21,6 +21,7 @@ const ProductList = () => {
             const response = await axios.get('http://localhost:5000/token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
+	    console.log(decoded);
             setName(decoded.name);
             setExpire(decoded.exp);
         } catch (error) {
@@ -59,15 +60,8 @@ const ProductList = () => {
     return (
         <div className="container mt-5">
             <h1>Welcome Back: {name}</h1>
-            <button onClick={getProducts} className="button is-info">Get Products</button>
                     {products.map((prd, index) => (
-                        <tr key={prd.id}>
-                            <p>{index + 1}</p>
-                            <p>{prd.nombre}</p>
-                            <p>{prd.descripcion}</p>
-			    <img src={prd.imagen} alt="Imagen lol"/>
-			    <b>{prd.precio}</b>
-                        </tr>
+		      <p key={prd.id}>{prd.nombre}</p>
                     ))}
         </div>
     )
