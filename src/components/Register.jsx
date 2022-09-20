@@ -36,64 +36,63 @@ const Register = () => {
 	};
 
 	return (
-		<section className="hero has-background-grey-light is-fullheight is-fullwidth">
-			<div className="hero-body">
-				<div className="container">
-					<div className="columns is-centered">
-						<div className="column is-4-desktop">
-							<form onSubmit={Register} className="box">
+		<section className="container">
+			<div className="row">
+				<div className="col-md-5 mx-auto">
+						<div className="card-body">
+							<form onSubmit={Register} className="form-group">
 								<p className="has-text-centered">{msg}</p>
-								<div className="field mt-5">
+								<div className="form-group">
 									<label className="label">Name</label>
-									<div className="controls">
+									<div className="form-group">
 										<input
 											type="text"
-											className="input"
+											className="form-control"
 											placeholder="Name"
 											value={name}
 											onChange={(e) => setName(e.target.value)}
 										/>
 									</div>
 								</div>
-								<div className="field mt-5">
+								<div className="">
 									<label className="label">Surname</label>
-									<div className="controls">
+									<div className="form-group">
 										<input
 											type="text"
-											className="input"
+											className="form-control"
 											placeholder="Surname"
 											value={surname}
 											onChange={(e) => setSurname(e.target.value)}
 										/>
 									</div>
 								</div>
-								<div className="field mt-5">
+								<div className="form-group">
 									<label className="label">Email</label>
-									<div className="controls">
+									<div className="form-group">
 										<input
 											type="text"
-											className="input"
+											className="form-control"
 											placeholder="Email"
 											value={email}
 											onChange={(e) => setEmail(e.target.value)}
 										/>
 									</div>
 								</div>
-								<div className="field mt-5">
+								<div className="">
 									<label className="label">Password</label>
-									<div className="controls">
+									<div className="form-group">
 										<input
 											type="password"
-											className="input"
+											className="form-control"
 											placeholder="******"
 											value={password}
 											onChange={(e) => setPassword(e.target.value)}
 										/>
 									</div>
 								</div>
-								<div className="field mt-5">
+								<div className="">
 									<label className="label">Confirm Password</label>
-									<div className="controls">
+									<div className="form-group">
 										<select
 											className="form-select"
 											aria-label="Default select"
@@ -108,13 +107,12 @@ const Register = () => {
 									</div>
 								</div>
 
-								<div className="field mt-5">
-									<button className="button is-success is-fullwidth">Register</button>
+								<div className="form-group">
+									<button className="btn btn-success btn-block">Register</button>
 								</div>
 							</form>
 						</div>
 					</div>
-				</div>
 			</div>
 		</section>
 	);
