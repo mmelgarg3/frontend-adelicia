@@ -14,9 +14,9 @@ const Login = () => {
         try {
             await axios.post('http://localhost:5000/login', {
                 email: email,
-                password: password
+                password: password,
+                role: role
             });
-	    console.log("Selecionado: ", role);
 	    if(role == 1) history.push("/register");
 	    if(role == 2) history.push("/cook-dash");
 	    if(role == 3) history.push("/waiter-dash");
@@ -30,7 +30,6 @@ const Login = () => {
 
   const handleChange =(event)=>{
     var value = event.target.value;
-    console.log(value);
     setRole(value);
   }
 
@@ -45,7 +44,7 @@ const Login = () => {
                                 <div className="field mt-5">
                                     <label className="label">Email</label>
                                     <div className="controls">
-                                        <input type="text" className="input" placeholder="Username" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                        <input type="text" className="input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="field mt-5">
