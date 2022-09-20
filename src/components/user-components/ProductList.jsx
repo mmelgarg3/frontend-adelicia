@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 const ProductList = () => {
     const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
     const [products, setProducts] = useState([]);
@@ -21,7 +22,7 @@ const ProductList = () => {
             const response = await axios.get('http://localhost:5000/token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
-	    console.log(decoded);
+	    setSurname(decoded.surname);
             setName(decoded.name);
             setExpire(decoded.exp);
         } catch (error) {
@@ -59,10 +60,20 @@ const ProductList = () => {
 
     return (
         <div className="container mt-5">
-            <h1>Welcome Back: {name}</h1>
-                    {products.map((prd, index) => (
-		      <p key={prd.id}>{prd.nombre}</p>
+            <h4>Bienvenido a Adelicia's Restaurant': <b>{name} {surname}</b></h4>
+
+	    <div className="card-deck mt-4">
+                    {products.map((prd) => (
+		      <div className="card" key={prd.id} style={{width:18 + "rem"}}>
+		      <img src={prd.imagen} style={{height: 200, objectFit: 'cover'}} className="card-img-top" alt="..." />
+			<div className="card-body">
+			  <h5 className="card-title">{prd.nombre}</h5>
+			  <p className="card-text">{prd.descripcion}</p>
+			  <button href="#" className="btn btn-primary">Agregar Pedido</button>
+			</div>
+		      </div>
                     ))}
+	    </div>
         </div>
     )
 }
