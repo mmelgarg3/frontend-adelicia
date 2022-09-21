@@ -1,0 +1,17 @@
+#btn-scroll{
+  display: block !important;
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  background: red;
+}
+
+.show{
+  display: block;
+}
+
+
+.hide{
+  display: none;
+}
+
