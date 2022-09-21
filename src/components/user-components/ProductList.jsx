@@ -16,6 +16,8 @@ const ProductList = () => {
     useEffect(() => {
         refreshToken();
 	getProducts();
+	const data = window.localStorage.getItem('orders');
+	if(data !== null) setOrders(data);
     });
 
     const refreshToken = async () => {
@@ -68,10 +70,16 @@ const ProductList = () => {
     }
 
 
+    const verPedidos = ()=>{
+      window.localStorage.setItem('orders', orders);
+      history.push("/pedidos");
+    }
+ 
+
     return (
       <>
 	<div className="container mt-5">
-	<button className="btn btn-success" 
+	<button className="btn btn-success"  onClick={verPedidos}
 	  style={{position: 'absolute', right: 30, top: 90}}> 
 	  <i className="fas fa-cart-shopping mr-2"></i> 
 	  Pedidos: {orders.length}
