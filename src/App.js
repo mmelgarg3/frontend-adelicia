@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import AdminDashboard from "./components/admin-dash";
 import WaiterDashboard from "./components/WaiterDashboard";
 import CookDashboard from "./components/CookDashboard";
+import Orders from "./components/user-components/Orders";
 
 function App() {
   return (
@@ -33,7 +34,10 @@ function App() {
 	  <Navbar />
 	  <CookDashboard />
 	</Route>
-
+	<Route path="/orders">
+	  <Navbar />
+	  <Orders />
+	</Route>
       </Switch>
     </BrowserRouter>
   );
