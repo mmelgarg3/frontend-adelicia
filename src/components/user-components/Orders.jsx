@@ -24,17 +24,35 @@ export default function Orders(){
 
   return(
     <>
-      <div className="container">
-	{products.map((prd) => (
-	    <div className="card" key={prd.id}>
-	      <p>{prd.nombre}</p>
-	      <p>{prd.descripcion}</p>
-	      <p>{prd.precio}</p>
+
+      <h2 className="card-title ml-4 mt-4 text-primary">Mis Pedidos</h2>
+      <div className="container" style={{marginTop: 80}}>
+	<div className="row">
+	  <div className="col-md-8 mx-auto">
+	    <div className="table">
+	      <thead className="thead-dark">
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">Pedido</th>
+		  <th scope="col">Descripcion</th>
+		  <th scope="col">Precio</th>
+		</tr>
+	      </thead>
+	      <tbody>
+		{products.map((prd, index) => (
+		  <tr key={prd.id}>
+		    <th scope="row">{index}</th>
+		    <td>{prd.nombre}</td>
+		    <td>{prd.descripcion}</td>
+		    <td>Q.{prd.precio}</td>
+		  </tr>
+		))}
+	      </tbody>
 	    </div>
-	  ))}
-	
+	    <button className="btn btn-success mt-4" onClick={handleClick}> Confirmar Pedido </button>
+	  </div>
+	</div>
       </div>
-      <button className="btn btn-danger" onClick={handleClick}> Confirmar Pedido </button>
     </>
   );
 }
