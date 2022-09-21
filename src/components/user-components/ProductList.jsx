@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useHistory } from 'react-router-dom';
+import './style/ProductStyle.css';
 
 const ProductList = () => {
     const [name, setName] = useState('');
@@ -13,9 +14,23 @@ const ProductList = () => {
     const [orders, setOrders] = useState([]);
     const history = useHistory();
 
+
+    const [showGoTop, setShowGoTop] = useState(false)
+
+    const handleVisibleButton = () => {
+      console.log(window.pageYOffset > 30)
+      setShowGoTop(window.pageYOffset > 30)
+    }
+
+    const handleScrollUp = () => {
+	    window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
+    }
+
+
     useEffect(() => {
         refreshToken();
 	getProducts();
+	window.addEventListener('scroll', handleVisibleButton)
     }, []);
 
     const refreshToken = async () => {
@@ -111,10 +126,14 @@ const ProductList = () => {
 			    </div>
 			  </div>
 			</div>
-			
 		      ))}
 	      </div>
         </div>
+      <button className={`btn btn-warning ${showGoTop ? 'show': 'hide'}`} 
+	  onClick={handleScrollUp}
+      style={{position: 'fixed', bottom: 10, right:10}}>
+	  <i className="fas fa-angle-up"></i>
+	</button>
       </>
         
     )
