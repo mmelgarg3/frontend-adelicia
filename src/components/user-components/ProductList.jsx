@@ -10,12 +10,13 @@ const ProductList = () => {
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
     const [products, setProducts] = useState([]);
+    const [orders, setOrders] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
         refreshToken();
 	getProducts();
-    }, []);
+    });
 
     const refreshToken = async () => {
         try {
@@ -58,24 +59,55 @@ const ProductList = () => {
         setProducts(response.data);
     }
 
-    return (
-        <div className="container mt-5">
-            <h4>Bienvenido a Adelicia's Restaurant': <b>{name} {surname}</b></h4>
 
-      <div className="card-deck" style={{marginTop: 100, marginBottom: 20}}>
-                    {products.map((prd) => (
-		      <div className="card" key={prd.id} style={{width:18 + "rem"}}>
-		      <img src={prd.imagen} style={{height: 200, objectFit: 'cover'}} className="card-img-top" alt="..." />
-			<div className="card-body">
-			  <h5 className="card-title">{prd.nombre}</h5>
-			  <p className="card-text text-justify">{prd.descripcion}</p>
-			  <h3 >Q.{prd.precio}</h3>
-			  <button href="#" className="btn btn-warning btn-block">Agregar  <i className="fas fa-cart-shopping"></i> </button>
+    const handleAdd = (e, prd)=>{
+      e.preventDefault();
+      const newArr = orders.slice();
+      newArr.push(prd)
+      setOrders(newArr);
+    }
+
+
+    return (
+      <>
+	<div className="container mt-5">
+	<button className="btn btn-success" 
+	  style={{position: 'absolute', right: 30, top: 90}}> 
+	  <i className="fas fa-cart-shopping mr-2"></i> 
+	  Pedidos: {orders.length}
+	</button>
+
+            <h4>
+		Bienvenido a Adelicia's Restaurant': 
+		<b>{name} {surname}</b>
+	    </h4>
+
+	    <div className="card-deck" 
+	      style={{marginTop: 100, marginBottom: 20}}>
+		      {products.map((prd, index) => (
+			<div className="card" key={prd.id} 
+			style={{width:18 + "rem"}}>
+			<img src={prd.imagen} 
+			style={{height: 200, objectFit: 'cover'}} 
+			className="card-img-top" alt="..." />
+			  <div className="card-body">
+			    <h5 className="card-title">{prd.nombre}</h5>
+			    <p className="card-text text-justify">
+			      {prd.descripcion}
+			    </p>
+			    <h3 >Q.{prd.precio}</h3>
+			    <button onClick={event => handleAdd(event,prd)}
+			      className="btn btn-warning btn-block">
+				Agregar  
+			      <i className="fas fa-cart-shopping"></i> 
+			    </button>
+			  </div>
 			</div>
-		      </div>
-                    ))}
-	    </div>
+		      ))}
+	      </div>
         </div>
+      </>
+        
     )
 }
 
