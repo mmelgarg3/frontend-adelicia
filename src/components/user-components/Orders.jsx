@@ -1,7 +1,17 @@
 export default function Orders(){
+
+
+
+  const handleClick = (e)=>{
+    e.preventDefault();
+    window.localStorage.removeItem('orders');
+    alert("Orders clean up");
+  }
+
+
   return(
     <>
-      <h1>Orders Page</h1>
+      <button className="btn btn-danger" onClick={handleClick}> Confirmar Pedido </button>
     </>
   );
 }
