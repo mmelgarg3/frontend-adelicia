@@ -16,8 +16,6 @@ const ProductList = () => {
     useEffect(() => {
         refreshToken();
 	getProducts();
-	const data = window.localStorage.getItem('orders');
-	if(data !== null) setOrders(data);
     });
 
     const refreshToken = async () => {
@@ -71,8 +69,8 @@ const ProductList = () => {
 
 
     const verPedidos = ()=>{
-      window.localStorage.setItem('orders', orders);
-      history.push("/pedidos");
+      window.localStorage.setItem('orders', JSON.stringify(orders));
+      history.push("/orders");
     }
  
 
