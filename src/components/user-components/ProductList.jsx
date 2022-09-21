@@ -78,7 +78,7 @@ const ProductList = () => {
 	</button>
 
             <h4>
-		Bienvenido a Adelicia's Restaurant': 
+		Bienvenido a Adelicia's Restaurant: 
 		<b>{name} {surname}</b>
 	    </h4>
 
