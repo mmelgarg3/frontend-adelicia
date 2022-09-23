@@ -1,6 +1,7 @@
 import {useState, useEffect, history} from 'react';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import { useHistory} from "react-router-dom"
 
 
 export default function Orders(){
@@ -10,7 +11,7 @@ export default function Orders(){
   const [expire, setExpire] = useState('');
   const [userId, setUserId] = useState('');
   const [total, setTotal] = useState(0);
-
+  const history = useHistory();
 
   useEffect(() =>{
     getData();
@@ -25,12 +26,19 @@ export default function Orders(){
 
   const handleClick = async (e)=>{
     e.preventDefault();
-    await axios.post("https://localhost:5000/order",{
+    console.log(products);
+    let sum = 0;
+    products.forEach(el =>{
+      console.log(el);
+      sum += parseInt(el.precio);
+    });
+    const resp = await axios.post("http://localhost:5000/create-order",{
       userId: userId,
-      total: total
+      total: sum 
     });
     window.localStorage.removeItem('orders');
     alert("Orders clean up");
+    history.push("/cooking-page");
   }
 
   const refreshToken = async () => {
@@ -38,14 +46,33 @@ export default function Orders(){
             const response = await axios.get('http://localhost:5000/token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
-	    console.log(decoded);
             setExpire(decoded.exp);
+	    setUserId(decoded.userId);
         } catch (error) {
             if (error.response) {
                 history.push("/");
             }
         }
     }
+
+    const axiosJWT = axios.create();
+
+    axiosJWT.interceptors.request.use(async (config) => {
+        const currentDate = new Date();
+        if (expire * 1000 < currentDate.getTime()) {
+            const response = await axios.get('http://localhost:5000/token');
+            config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+            setToken(response.data.accessToken);
+            const decoded = jwt_decode(response.data.accessToken);
+	    setUserId(decoded.userId);
+            setExpire(decoded.exp);
+        }
+        return config;
+    }, (error) => {
+        return Promise.reject(error);
+    });
+
+
 
 
   return(
