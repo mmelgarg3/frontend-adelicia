@@ -91,7 +91,7 @@ const ProductList = () => {
 
     return (
       <>
-	<div className="container mt-5">
+	<table className="container mt-5">
 	<button className="btn btn-success"  onClick={verPedidos}
 	  style={{position: 'absolute', right: 30, top: 90}}> 
 	  <i className="fas fa-cart-shopping mr-2"></i> 
@@ -103,16 +103,16 @@ const ProductList = () => {
 		<b>{name} {surname}</b>
 	    </h4>
 
-	    <div className="row row-cols-1 row-cols-md-3" 
+	    <table className="row row-cols-1 row-cols-md-3" 
 	      style={{marginTop: 100, marginBottom: 20}}>
 		      {products.map((prd, index) => (
-			<div className="col mb-4">
-			  <div className="card" key={prd.id} 
+			<table className="col mb-4">
+			  <table className="card" key={prd.id} 
 			  style={{width:18 + "rem"}}>
 			  <img src={prd.imagen} 
 			  style={{height: 200, objectFit: 'cover'}} 
 			  className="card-img-top" alt="..." />
-			    <div className="card-body">
+			    <table className="card-body">
 			      <h5 className="card-title">{prd.nombre}</h5>
 			      <p className="card-text text-justify">
 				{prd.descripcion}
@@ -123,12 +123,12 @@ const ProductList = () => {
 				  Agregar  
 				<i className="fas fa-cart-shopping"></i> 
 			      </button>
-			    </div>
-			  </div>
-			</div>
+			    </table>
+			  </table>
+			</table>
 		      ))}
-	      </div>
-        </div>
+	      </table>
+        </table>
       <button className={`btn btn-warning ${showGoTop ? 'show': 'hide'}`} 
 	  onClick={handleScrollUp}
       style={{position: 'fixed', bottom: 10, right:10}}>
