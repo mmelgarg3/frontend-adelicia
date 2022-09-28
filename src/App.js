@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import AdminDashboard from "./components/admin-dash";
 import WaiterDashboard from "./components/WaiterDashboard";
-import CookDashboard from "./components/CookDashboard";
 import Orders from "./components/user-components/Orders";
 import CookingPage from "./components/user-components/CookingPage";
 
@@ -30,10 +29,6 @@ function App() {
 	<Route path="/waiter-dash">
 	  <Navbar />
 	  <WaiterDashboard />
-	</Route>
-	<Route path="/cook-dash">
-	  <Navbar />
-	  <CookDashboard />
 	</Route>
 	<Route path="/orders">
 	  <Navbar />
