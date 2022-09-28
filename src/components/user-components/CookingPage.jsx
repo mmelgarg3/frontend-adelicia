@@ -14,7 +14,6 @@ export default function CookingPage(){
     refreshToken();
   }, []);
 
-
   const refreshToken = async () => {
       try {
 	  const response = await axios.get('http://localhost:5000/token');
@@ -72,6 +71,10 @@ export default function CookingPage(){
       console.log(err);
     }
   }
+
+
+
+
   return(
       <>
 	<h2 className="card-title ml-4 mt-4 text-primary">Ordenes</h2>
