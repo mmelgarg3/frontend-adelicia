@@ -14,6 +14,7 @@ export default function CookingPage(){
     refreshToken();
   }, []);
 
+
   const refreshToken = async () => {
       try {
 	  const response = await axios.get('http://localhost:5000/token');
@@ -54,16 +55,19 @@ export default function CookingPage(){
   }
 
   const removeOrder = (id)=>{
-    const new_arr = orders.filter(el => el.id == id)
+    console.log("id to delete: ", id);
+    const new_arr = orders.filter(el => el.id !== id)
     setOrders(new_arr);
+    console.log(orders);
   }
 
   const handleClick = async( id)=>{
+
+    removeOrder(id);
     try{
       await axios.post('http://localhost:5000/change-status',{
 	id: id
       });
-      removeOrder(id);
     }catch(err){
       console.log(err);
     }
@@ -91,7 +95,7 @@ export default function CookingPage(){
 		      <th scope="row">{index}</th>
 		      <td>{ord.fecha}</td>
 		      <td>{ord.idUsuario}</td>
-		      <td>{ord.estado}</td>
+		      <td>Solicitado</td>
 		      <td>Q.{ord.totalPedido}</td>
 		      <td>
 			<button onClick={(e) => handleClick(ord.id)} className="btn btn-danger">Cocinar</button>
