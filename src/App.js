@@ -7,6 +7,7 @@ import AdminDashboard from "./components/admin-dash";
 import WaiterDashboard from "./components/WaiterDashboard";
 import Orders from "./components/user-components/Orders";
 import CookingPage from "./components/user-components/CookingPage";
+import ClientDash from "./components/user-components/clientDash";
 
 function App() {
   return (
@@ -37,6 +38,10 @@ function App() {
 	<Route path="/cooking-page">
 	  <Navbar />
 	  <CookingPage />
+	</Route>
+	<Route path="/client-dash">
+	  <Navbar />
+	  <ClientDash />
 	</Route>
       </Switch>
     </BrowserRouter>
