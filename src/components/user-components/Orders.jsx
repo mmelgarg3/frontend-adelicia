@@ -38,7 +38,7 @@ export default function Orders(){
     });
     window.localStorage.removeItem('orders');
     alert("Orders clean up");
-    history.push("/cooking-page");
+    history.push("/client-dash");
   }
 
   const refreshToken = async () => {
