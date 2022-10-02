@@ -8,6 +8,7 @@ import WaiterDashboard from "./components/WaiterDashboard";
 import Orders from "./components/user-components/Orders";
 import CookingPage from "./components/user-components/CookingPage";
 import ClientDash from "./components/user-components/clientDash";
+import PaymentPage from "./components/user-components/paymentPage";
 
 function App() {
   return (
@@ -42,6 +43,10 @@ function App() {
 	<Route path="/client-dash">
 	  <Navbar />
 	  <ClientDash />
+	</Route>
+	<Route path="/payment-page">
+	  <Navbar />
+	  <PaymentPage />
 	</Route>
       </Switch>
     </BrowserRouter>
