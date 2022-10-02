@@ -62,7 +62,7 @@ export default function WaiterDashboard(){
 
     removeOrder(id);
     try{
-      await axios.post('http://localhost:5000/finish-order',{
+      await axios.post('http://localhost:5000/check-order',{
 	query: {
 	  id: id
 	}
@@ -77,7 +77,7 @@ export default function WaiterDashboard(){
 
   return(
       <>
-	<h2 className="card-title ml-4 mt-4 text-warning">Ordenes en Cocina</h2>
+	<h2 className="card-title ml-4 mt-4 text-warning">Ordenes Cocinadas</h2>
 	<div className="container" style={{marginTop: 80}}>
 	  <div className="row">
 	    <div className="col-md-8 mx-auto">
