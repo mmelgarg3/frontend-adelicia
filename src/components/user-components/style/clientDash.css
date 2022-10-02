@@ -1,0 +1,23 @@
+#spinner{
+  position: fixed;
+  display: block;
+  top: 50%;
+  left: 50%;
+  height: 400px;
+  width: 400px;
+  font-size: 260%;
+  margin-top: -200px;
+  margin-left: -200px;
+  color: #36A3D9;
+}
+
+
+.spinner-text{
+  position: fixed;
+  display: block;
+  top: 50%;
+  left: 38%;
+  color: #36A3D9;
+  font-size: 200%;
+}
+
