@@ -46,7 +46,7 @@ export default function WaiterDashboard(){
   const getOrders = async () => {
       const response = await axios.get('http://localhost:5000/orders', {
 	params: {
-	  estado: 2
+	  estado: 3
 	},
       });
       setOrders(response.data);
@@ -98,7 +98,7 @@ export default function WaiterDashboard(){
 		      <th scope="row">{index}</th>
 		      <td>{ord.fecha}</td>
 		      <td>{ord.idUsuario}</td>
-		      <td>Cocinando</td>
+		      <td>Cocinado</td>
 		      <td>Q.{ord.totalPedido}</td>
 		      <td>
 			<button onClick={(e) => handleClick(ord.id)} className="btn btn-success">

@@ -7,10 +7,12 @@ export default function CookingPage(){
   const [token, setToken] = useState('');
   const [expire, setExpire] = useState('');
   const [orders, setOrders] = useState([]);
+  const [orders2, setOrders2] = useState([]);
   const history = useHistory();
 
   useEffect(()=>{
     getOrders();
+    getOthersOrders();
     refreshToken();
   }, []);
 
@@ -44,13 +46,25 @@ export default function CookingPage(){
   });
 
   const getOrders = async () => {
-      const response = await axios.get('http://localhost:5000/orders', {
-	params: {
-	  estado: 1
-	},
+      const response = await axios.get('http://localhost:5000/orders',{
+      params: {
+        estado: 1
+      }
       });
       console.log(response.data);
       setOrders(response.data);
+  }
+
+
+
+  const getOthersOrders = async()=>{
+      const response = await axios.get('http://localhost:5000/orders',{
+      params: {
+        estado: 2
+      }
+      });
+      console.log(response.data);
+      setOrders2(response.data);
   }
 
   const removeOrder = (id)=>{
@@ -60,7 +74,7 @@ export default function CookingPage(){
     console.log(orders);
   }
 
-  const handleClick = async( id)=>{
+  const handleClick = async(id)=>{
 
     removeOrder(id);
     try{
@@ -70,17 +84,17 @@ export default function CookingPage(){
     }catch(err){
       console.log(err);
     }
+    getOthersOrders();
   }
 
 
 
 
   return(
-      <>
-	<h2 className="card-title ml-4 mt-4 text-primary">Ordenes</h2>
+    <>
 	<div className="container" style={{marginTop: 80}}>
 	  <div className="row">
-	    <div className="col-md-8 mx-auto">
+	    <div className="col-md-6">
 	      <table className="table">
 		<thead className="thead-dark">
 		  <tr>
@@ -98,17 +112,47 @@ export default function CookingPage(){
 		      <th scope="row">{index}</th>
 		      <td>{ord.fecha}</td>
 		      <td>{ord.idUsuario}</td>
-		      <td>Solicitado</td>
+		      <td className="text-primary">Solicitado</td>
 		      <td>Q.{ord.totalPedido}</td>
 		      <td>
-			<button onClick={(e) => handleClick(ord.id)} className="btn btn-danger">Cocinar</button>
+			<button onClick={(e) => handleClick(ord.id)} className="btn btn-primary">Cocinar</button>
 		      </td>
 		    </tr>
 		  ))}
 		</tbody>
 	      </table>
-	    </div>
-	  </div>
+	     </div>
+<div className="col-md-6">
+	      <table className="table">
+		<thead className="thead-dark">
+		  <tr>
+		    <th scope="col">#</th>
+		    <th scope="col">fecha</th>
+		    <th scope="col">Usuario</th>
+		    <th scope="col">Estado</th>
+		    <th scope="col">Total</th>
+		    <th scope="col">Acciones</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  {orders2.map((ord, index) => (
+		    <tr key={ord.id}>
+		      <th scope="row">{index}</th>
+		      <td>{ord.fecha}</td>
+		      <td>{ord.idUsuario}</td>
+		      <td className="text-success">Cocinando</td>
+		      <td>Q.{ord.totalPedido}</td>
+		      <td>
+			<button onClick={(e) => handleClick(ord.id)} className="btn btn-success">
+			  Terminar
+			</button>
+		      </td>
+		    </tr>
+		  ))}
+		</tbody>
+	      </table>
+	     </div>
+	   </div>
 	</div>
       </>
   );

@@ -2,6 +2,7 @@ import {useState, useEffect, history} from 'react';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useHistory} from "react-router-dom"
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 export default function Orders(){
@@ -12,6 +13,7 @@ export default function Orders(){
   const [userId, setUserId] = useState('');
   const [total, setTotal] = useState(0);
   const history = useHistory();
+  const [show, setShow] = useState(false);
 
   useEffect(() =>{
     getData();
@@ -24,8 +26,12 @@ export default function Orders(){
 
   }
 
-  const handleClick = async (e)=>{
+  const handleClick = (e)=>{
     e.preventDefault();
+    setShow(true);
+  }
+
+  const redirectPage = async()=>{
     console.log(products);
     let sum = 0;
     products.forEach(el =>{
@@ -37,7 +43,6 @@ export default function Orders(){
       total: sum 
     });
     window.localStorage.removeItem('orders');
-    alert("Orders clean up");
     history.push("/client-dash");
   }
 
@@ -81,6 +86,15 @@ export default function Orders(){
   return(
     <>
 
+    {show &&
+      <SweetAlert
+	success
+	title="Orden Confirmada, su orden pasara a Cocina :D"
+	onConfirm={redirectPage}
+      >
+	I did it!
+      </SweetAlert>
+    }
     <button onClick={handleClickOrders} 
       className="btn btn-warning text-white" style={{position: 'absolute', top: 80, right: 20}}>
       Ver Pedidos en Espera
