@@ -2,6 +2,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
+import './style/clientDash.css'
 
 export default function ClientDash(){
 
@@ -83,7 +84,6 @@ export default function ClientDash(){
     });
 
   const handleChange = (id)=>{
-    // const new_arr = data.filter(el => el.id !== id);
     const new_arr = data;
     const updateObjectInArray = (id) => {
     setData(current =>
@@ -143,10 +143,19 @@ export default function ClientDash(){
 	  </div>
 	</div>
       {run &&
-	<div className="spinner-border" role="status">
-	  <span className="sr-only">Loading...</span>
+	<div className="d-flex flex-column align-items-center justify-content-center">
+	  <div className="row">
+	    <div className="spinner-border" id="spinner"role="status">
+	      <h3 className="sr-only" >Loading... fdkjflasddkajflkjkfjaskl</h3>
+	    </div>
+	  </div>
+	  <div className="row">
+	    <strong className='spinner-text'>Cargando Informacion</strong>
+	  </div>
 	</div>
+
       }
+
     </>
   );
 }
