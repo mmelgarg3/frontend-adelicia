@@ -94,7 +94,17 @@ export default function CookingPage(){
   }
 
 
-
+  const handleRemove = async(id)=>{
+    const new_arr = orders2.filter(el => el.id !== id)
+    setOrders2(new_arr);
+    try{
+      await axios.post('http://localhost:5000/finish-order',{
+	id: id
+      });
+    }catch(err){
+      console.log(err);
+    }
+  }
 
   return(
     <>
@@ -149,7 +159,7 @@ export default function CookingPage(){
 		      <td className="text-success">Cocinando</td>
 		      <td>Q.{ord.totalPedido}</td>
 		      <td>
-			<button onClick={(e) => handleClick(ord.id)} className="btn btn-success">
+			<button onClick={(e) => handleRemove(ord.id)} className="btn btn-success">
 			  Terminar
 			</button>
 		      </td>
