@@ -73,6 +73,13 @@ export default function WaiterDashboard(){
   }
 
 
+  const addOrderToPayment = (ord)=>{
+    window.localStorage.setItem('payment-order', JSON.stringify(ord));
+    history.push("/payment-page");
+  }
+
+
+
 
 
   return(
@@ -101,7 +108,7 @@ export default function WaiterDashboard(){
 		      <td>Cocinado</td>
 		      <td>Q.{ord.totalPedido}</td>
 		      <td>
-			<button onClick={(e) => handleClick(ord.id)} className="btn btn-success">
+			<button onClick={(e) => addOrderToPayment(ord)} className="btn btn-success">
 			  Terminar Pedido
 			</button>
 		      </td>
