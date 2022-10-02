@@ -68,10 +68,17 @@ export default function CookingPage(){
   }
 
   const removeOrder = (id)=>{
-    console.log("id to delete: ", id);
+    const add = (el)=>{
+      setOrders2((orders2) => [...orders2, el]);
+    }
+
+    orders.map((el)=>{
+      if(el.id === id){
+	add(el);
+      }
+    });
     const new_arr = orders.filter(el => el.id !== id)
     setOrders(new_arr);
-    console.log(orders);
   }
 
   const handleClick = async(id)=>{
@@ -84,7 +91,6 @@ export default function CookingPage(){
     }catch(err){
       console.log(err);
     }
-    getOthersOrders();
   }
 
 
@@ -108,7 +114,7 @@ export default function CookingPage(){
 		</thead>
 		<tbody>
 		  {orders.map((ord, index) => (
-		    <tr key={ord.id}>
+		    <tr key={ord.id+ord.totalPedido}>
 		      <th scope="row">{index}</th>
 		      <td>{ord.fecha}</td>
 		      <td>{ord.idUsuario}</td>
@@ -136,7 +142,7 @@ export default function CookingPage(){
 		</thead>
 		<tbody>
 		  {orders2.map((ord, index) => (
-		    <tr key={ord.id}>
+		    <tr key={ord.id+ord.totalPedido}>
 		      <th scope="row">{index}</th>
 		      <td>{ord.fecha}</td>
 		      <td>{ord.idUsuario}</td>
