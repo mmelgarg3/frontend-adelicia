@@ -11,7 +11,6 @@ const PaymentPage = ()=>{
   const getData = ()=>{
     const data = window.localStorage.getItem('payment-order');
     if(data !== null) setPaymentOrder(JSON.parse(data));
-    console.log(data);
   }
 
 
@@ -114,8 +113,8 @@ const PaymentPage = ()=>{
 		    <input type="number" ref={inputCvv} placeholder="CVV"/>
 		</div>
 	      </div>
-	      <h5> Monto total a facturar: <b>{}</b> </h5>
-	      <button className='btn btn-success' onClick={handleSubmit}>Realizar Cobro</button>
+	      <h5> Monto total a facturar: <b>Q. {paymentOrder.totalPedido}</b> </h5>
+	      <button className='btn btn-success mt-4' onClick={handleSubmit}>Realizar Cobro</button>
 	    </div>
 	  </div>
 	</div>
