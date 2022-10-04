@@ -7,6 +7,7 @@ const PaymentPage = ()=>{
   const [paymentOrder, setPaymentOrder] = useState([]);
   const [val, setVal] = useState('');
   const inputCvv = useRef(null);
+  const inputDate = useRef(null);
   const [checkedState, setCheckedState] = useState('');
   const [vuelto, setVuelto] = useState(0);
 
@@ -71,8 +72,10 @@ const PaymentPage = ()=>{
 
 
   const handleSubmit = ()=>{
+    console.log(inputDate.current.value);
+    console.log(inputCvv.current.value);
+    console.log(val.replace(/\s/g, ''));
     
-
   }
 
 
@@ -124,11 +127,11 @@ const PaymentPage = ()=>{
 		      placeholder="0000 0000 0000 0000" />
 		    </div>
 		    <div className="form-group ml-3">
-			<input type="text" onKeyUp={formatString} 
+			<input type="text" onKeyUp={formatString} ref={inputDate}
 			placeholder="Fecha de Expiracion" />
 		    </div>
 		    <div className="form-group ml-3">
-			<input type="number" ref={inputCvv} placeholder="CVV"/>
+			<input type="text" ref={inputCvv} placeholder="CVV"/>
 		    </div>
 		  </div>
 		  <h5> Monto total a facturar: <b className='text-danger'>Q. 
