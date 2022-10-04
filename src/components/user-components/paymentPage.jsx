@@ -1,4 +1,7 @@
-  import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useHistory } from 'react-router-dom';
+import axios from "axios";
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 
@@ -10,7 +13,9 @@ const PaymentPage = ()=>{
   const inputDate = useRef(null);
   const [checkedState, setCheckedState] = useState('');
   const [vuelto, setVuelto] = useState(0);
+  const [show, setShow] = useState(false);
 
+  const history = useHistory();
   const getData = ()=>{
     const data = window.localStorage.getItem('payment-order');
     if(data !== null) setPaymentOrder(JSON.parse(data));
@@ -36,9 +41,6 @@ const PaymentPage = ()=>{
     return parts.length > 1 ? parts.join(" ") : value;
   }
 
-  const cvvChange = ()=>{
-
-  }
 
 
   function formatString(event) {
@@ -71,17 +73,46 @@ const PaymentPage = ()=>{
   },[]);
 
 
-  const handleSubmit = ()=>{
-    console.log(inputDate.current.value);
-    console.log(inputCvv.current.value);
-    console.log(val.replace(/\s/g, ''));
-    
+  const handleSubmit = async()=>{
+    setShow(true);
+    const CardNumber = val.replace(/\s/g, '');
+    try{
+      await axios.post("http://localhost:3000/create-invoice",{
+	total: paymentOrder.totalPedido,
+	idOrder: paymentOrder.id,
+	idTypePayment: 1,
+	nCard: CardNumber 
+      });
+    }
+    catch(err){
+      console.log(err);
+    }
   }
+
+  const redirectPage = ()=>{
+    window.localStorage.removeItem('payment-order');
+    history.push("waiter-dash");
+  }
+
+  const cashSubmit = async()=>{
+    setShow(true);
+    try{
+      await axios.post("http://localhost:3000/create-invoice",{
+	total: paymentOrder.totalPedido,
+	idOrder: paymentOrder.id,
+	idTypePayment: 2,
+	nCard: 0 
+      });
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
 
 
   const handleRadioChange = (event)=>{
     setCheckedState(event.target.value);
-
   }
 
   const changeAmount = (e)=>{
@@ -94,6 +125,16 @@ const PaymentPage = ()=>{
 
   return(
     <>
+    { show &&
+      <SweetAlert
+	warning	
+	title="Pago realizado, el producto estara visible para el cliente!"
+	onConfirm={redirectPage}
+      >
+	
+      </SweetAlert>
+
+    }
     <div className="container" style={{marginTop: 80}}>
       	<div className="row">
 	  <div className="col-md-6 mx-auto">
@@ -151,7 +192,9 @@ const PaymentPage = ()=>{
 			  {paymentOrder.totalPedido}</b> 
 			</h5>
 		      </div>
-		      <button className='btn btn-success mt-3 btn-block'>Realizar Cobro</button>
+		      <button className='btn btn-success mt-3 btn-block' onClick={cashSubmit}>
+			Realizar Cobro
+		      </button>
 		      <p className="text-muted text-center mt-2" 
 		      style={{fontSize: 13}}>
 			Al realizar el cobro automaticamente la caja dara el vuelto correspondiente
