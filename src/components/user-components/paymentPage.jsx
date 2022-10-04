@@ -7,6 +7,8 @@ const PaymentPage = ()=>{
   const [paymentOrder, setPaymentOrder] = useState([]);
   const [val, setVal] = useState('');
   const inputCvv = useRef(null);
+  const [checkedState, setCheckedState] = useState('');
+  const [vuelto, setVuelto] = useState(0);
 
   const getData = ()=>{
     const data = window.localStorage.getItem('payment-order');
@@ -74,6 +76,19 @@ const PaymentPage = ()=>{
   }
 
 
+  const handleRadioChange = (event)=>{
+    setCheckedState(event.target.value);
+
+  }
+
+  const changeAmount = (e)=>{
+    var total = parseInt(paymentOrder.totalPedido);
+    var amount = parseInt(e.target.value);
+    var vuelto = total - amount;
+    setVuelto(vuelto);
+  }
+
+
   return(
     <>
     <div className="container" style={{marginTop: 80}}>
@@ -82,39 +97,64 @@ const PaymentPage = ()=>{
 	    <h2 className="text-center">Formulario de Pago</h2>
 	    <div className="card p-4 mt-4">
 	      <div className="row pt-2 pl-3">
-		<div class="form-check">
-		  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-		  <label class="form-check-label" for="flexRadioDefault1">
+		<div className="form-check">
+		  <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+		  onChange={handleRadioChange} checked={checkedState === 'tarjeta'} value="tarjeta"/>
+		  <label className="form-check-label">
 		    Pago con tarjeta 
 		  </label>
 		</div>
-		<div class="form-check ml-4">
-		  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
-		  <label class="form-check-label" for="flexRadioDefault2">
+		<div className="form-check ml-4">
+		  <input className="form-check-input" type="radio" onChange={handleRadioChange}
+		    name="flexRadioDefault"  id="flexRadioDefault2" checked={checkedState === 'efectivo'} value="efectivo"/>
+		  <label className="form-check-label" >
 		    Pago en efectivo
 		  </label>
 		</div>
 	      </div>
 	      
 	      <br/>
-
-	      <label htmlFor="">Numero de la tarjeta</label>
-	      <div className="row">
-		<div className="form-group ml-3">
-		  <input type="tel" onChange={handleChange} 
-		  value={cc_format(val)}
-		  placeholder="0000 0000 0000 0000" />
+	      { checkedState === 'tarjeta' &&
+		<div>
+		  <label htmlFor="">Numero de la tarjeta</label>
+		  <div className="row">
+		    <div className="form-group ml-3">
+		      <input type="tel" onChange={handleChange} 
+		      value={cc_format(val)}
+		      placeholder="0000 0000 0000 0000" />
+		    </div>
+		    <div className="form-group ml-3">
+			<input type="text" onKeyUp={formatString} 
+			placeholder="Fecha de Expiracion" />
+		    </div>
+		    <div className="form-group ml-3">
+			<input type="number" ref={inputCvv} placeholder="CVV"/>
+		    </div>
+		  </div>
+		  <h5> Monto total a facturar: <b className='text-danger'>Q. 
+		    {paymentOrder.totalPedido}</b> 
+		  </h5>
+		  <button className='btn btn-success mt-4' onClick={handleSubmit}>Realizar Cobro</button>
 		</div>
-		<div className="form-group ml-3">
-		    <input type="text" onKeyUp={formatString} 
-		    placeholder="Fecha de Expiracion" />
-		</div>
-		<div className="form-group ml-3">
-		    <input type="number" ref={inputCvv} placeholder="CVV"/>
-		</div>
-	      </div>
-	      <h5> Monto total a facturar: <b>Q. {paymentOrder.totalPedido}</b> </h5>
-	      <button className='btn btn-success mt-4' onClick={handleSubmit}>Realizar Cobro</button>
+		}
+		
+		{ checkedState === 'efectivo' &&
+		    <div className="form-group">
+		      <input className='form-control' type="text" onChange={changeAmount} placeholder="Monto a recibir"/>
+		      <br/>
+		      <input type="text" className='form-control'  value={vuelto} placeholder="Vuelto" readOnly/>
+		      <div className="mt-4">
+			<h5> Monto total a facturar: <b className='text-danger'>Q. 
+			  {paymentOrder.totalPedido}</b> 
+			</h5>
+		      </div>
+		      <button className='btn btn-success mt-3 btn-block'>Realizar Cobro</button>
+		      <p className="text-muted text-center mt-2" 
+		      style={{fontSize: 13}}>
+			Al realizar el cobro automaticamente la caja dara el vuelto correspondiente
+		      </p>
+		    </div>
+		}
 	    </div>
 	  </div>
 	</div>
