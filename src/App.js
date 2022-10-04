@@ -21,31 +21,31 @@ function App() {
           <Register/>
         </Route>
         <Route path="/dashboard">
-          <Navbar/>
+          <Navbar show={true} />
           <Dashboard/>
         </Route>
 	<Route path="/admin-dash">
 	  <Navbar />
-	  <AdminDashboard />
+	  <AdminDashboard show={false}/>
 	</Route>
 	<Route path="/waiter-dash">
 	  <Navbar />
-	  <WaiterDashboard />
+	  <WaiterDashboard show={false}/>
 	</Route>
 	<Route path="/orders">
-	  <Navbar />
+	  <Navbar show={true}/>
 	  <Orders />
 	</Route>
 	<Route path="/cooking-page">
-	  <Navbar />
+	  <Navbar show={false}/>
 	  <CookingPage />
 	</Route>
 	<Route path="/client-dash">
-	  <Navbar />
+	  <Navbar show={true}/>
 	  <ClientDash />
 	</Route>
 	<Route path="/payment-page">
-	  <Navbar />
+	  <Navbar show={true}/>
 	  <PaymentPage />
 	</Route>
       </Switch>

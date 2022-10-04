@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = (show) => {
+    console.log(show.show);
     const history = useHistory();
+    const [showMe, setShowMe] = useState(show.show);
 
     const Logout = async () => {
 	window.localStorage.removeItem("userID");
@@ -25,14 +27,19 @@ const Navbar = () => {
 	  </button>
 
 	  <div className="collapse navbar-collapse" id="navbarSupportedContent">
-	    <ul className="navbar-nav mr-auto">
-	      <li className="nav-item active">
-		<a className="nav-link" href="/dashboard">Catalogo<span className="sr-only">(current)</span></a>
-	      </li>
-	      <li className="nav-item">
-		<a className="nav-link" href="/client-dash">Pedidos</a>
-	      </li>
-	    </ul>
+	      <ul className="navbar-nav mr-auto">
+
+	      { showMe &&
+		<div>
+		  <li className="nav-item active">
+		    <a className="nav-link" href="/dashboard">Catalogo<span className="sr-only">(current)</span></a>
+		  </li>
+		  <li className="nav-item">
+		    <a className="nav-link" href="/client-dash">Pedidos</a>
+		  </li>
+		</div>
+	      }
+	      </ul>
 	    <form className="form-inline my-2 my-lg-0">
 	      <button className="btn btn-outline-danger my-2 my-sm-0" type="button" onClick={Logout}>Logout</button>
 	    </form>
