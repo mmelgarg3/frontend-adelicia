@@ -124,9 +124,9 @@ export default function ClientDash(){
 		      <th scope="row">{index}</th>
 		      <td>{ord.fecha}</td>
 		      <td>{ord.idUsuario}</td>
-		      {ord.estado === 1 &&  <td>Solicitado</td>}
+		      {ord.estado === 1 &&  <td className='text-info'>Solicitado</td>}
 		      {ord.estado === 2 &&  <td className='text-primary'>Cocinando</td>}
-		      {ord.estado === 3 &&  <td className="text-success">Cocinado</td>}
+		      {ord.estado === 3 &&  <td className="text-warning">Cocinado</td>}
 		      {ord.estado === 5 &&  <td className='text-danger'>Cancelado</td>}
 		      {ord.estado === 4 &&  <td className='text-success'>Entregado</td>}
 		      <td>Q.{ord.totalPedido}</td>
@@ -146,7 +146,7 @@ export default function ClientDash(){
 	<div className="d-flex flex-column align-items-center justify-content-center">
 	  <div className="row">
 	    <div className="spinner-border" id="spinner"role="status">
-	      <h3 className="sr-only" >Loading... fdkjflasddkajflkjkfjaskl</h3>
+	      <h3 className="sr-only" >Loading... </h3>
 	    </div>
 	  </div>
 	  <div className="row">
