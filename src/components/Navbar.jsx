@@ -6,6 +6,8 @@ const Navbar = () => {
     const history = useHistory();
 
     const Logout = async () => {
+	window.localStorage.removeItem("userID");
+
         try {
             await axios.delete('http://localhost:5000/logout');
             history.push("/");

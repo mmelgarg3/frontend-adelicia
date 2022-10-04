@@ -12,6 +12,7 @@ const ProductList = () => {
     const [expire, setExpire] = useState('');
     const [products, setProducts] = useState([]);
     const [orders, setOrders] = useState([]);
+    const [userId, setUserId] = useState('');
     const history = useHistory();
 
 
@@ -38,6 +39,8 @@ const ProductList = () => {
             const response = await axios.get('http://localhost:5000/token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
+	    setUserId(decoded.userId);
+	    window.localStorage.setItem('userID', JSON.stringify(decoded.userId));
 	    setSurname(decoded.surname);
             setName(decoded.name);
             setExpire(decoded.exp);
@@ -106,8 +109,8 @@ const ProductList = () => {
 	    <div className="row row-cols-1 row-cols-md-3" 
 	      style={{marginTop: 100, marginBottom: 20}}>
 		      {products.map((prd, index) => (
-			<div className="col mb-4">
-			  <div className="card" key={prd.id} 
+			<div className="col mb-4" key={prd.id+index}>
+			  <div className="card"  
 			  style={{width:18 + "rem"}}>
 			  <img src={prd.imagen} 
 			  style={{height: 200, objectFit: 'cover'}} 

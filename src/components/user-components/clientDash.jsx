@@ -13,27 +13,14 @@ export default function ClientDash(){
   const history = useHistory();
   const [data, setData] = useState([]);
 
-  async function revisar(){
-      const response = await axios.get('http://localhost:5000/all-orders', {
-	params:{
-	  id: userId
-	}
-      });
-      console.log(response.data);
-
-  }
-
-  function main(){
-    revisar();
-  }
-
-
 
   const getData = async () => {
-    console.log(userId);
+    const id = window.localStorage.getItem('userID');
+    if(id !== null) setUserId(JSON.parse(id));
+    console.log(id);
     const response = await axios.get("http://localhost:5000/all-orders",{
 	params:{
-	  id: userId
+	  id: parseInt(id) 
 	}
     });
     if(response.data.length == 0){
@@ -47,11 +34,9 @@ export default function ClientDash(){
 
   useEffect(() => {
     let interval;
-    refreshToken();
     if (run) {
       interval = setInterval(() => {
-	refreshToken();
-        getData();
+	getData()
       }, 5000);
     } else if (!run) {
       clearInterval(interval);
@@ -61,16 +46,15 @@ export default function ClientDash(){
 
 
 
-
-
   const refreshToken = async () => {
 	try {
             const response = await axios.get('http://localhost:5000/token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
-	    console.log(decoded);
             setExpire(decoded.exp);
 	    setUserId(decoded.userId);
+	    console.log("result in method", userId);
+	    console.log(decoded, " is in first execution");
         } catch (error) {
             if (error.response) {
                 history.push("/");
