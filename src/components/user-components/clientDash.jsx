@@ -14,7 +14,11 @@ export default function ClientDash(){
   const [data, setData] = useState([]);
 
   async function revisar(){
-      const response = await axios.get('http://localhost:5000/all-orders');
+      const response = await axios.get('http://localhost:5000/all-orders', {
+	params:{
+	  id: userId
+	}
+      });
       console.log(response.data);
 
   }
@@ -26,12 +30,16 @@ export default function ClientDash(){
 
 
   const getData = async () => {
-    const response = await axios.get("http://localhost:5000/all-orders");
+    console.log(userId);
+    const response = await axios.get("http://localhost:5000/all-orders",{
+	params:{
+	  id: userId
+	}
+    });
     if(response.data.length == 0){
       console.log("no hay nada");
     }
     else{
-      console.log(response.data);
       setData(response.data);
       setRun(false);
     }
@@ -39,9 +47,10 @@ export default function ClientDash(){
 
   useEffect(() => {
     let interval;
+    refreshToken();
     if (run) {
       interval = setInterval(() => {
-        console.log("ejecutando");
+	refreshToken();
         getData();
       }, 5000);
     } else if (!run) {
@@ -52,11 +61,14 @@ export default function ClientDash(){
 
 
 
+
+
   const refreshToken = async () => {
 	try {
             const response = await axios.get('http://localhost:5000/token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
+	    console.log(decoded);
             setExpire(decoded.exp);
 	    setUserId(decoded.userId);
         } catch (error) {
@@ -109,7 +121,7 @@ export default function ClientDash(){
 	      <table className="table">
 		<thead className="thead-dark">
 		  <tr>
-		    <th scope="col">#</th>
+		    <th scope="col">#Pedido</th>
 		    <th scope="col">fecha</th>
 		    <th scope="col">Usuario</th>
 		    <th scope="col">Estado</th>
@@ -119,9 +131,9 @@ export default function ClientDash(){
 		</thead>
 		<tbody>
 	      {data.length > 0 && 
-	      data.map((ord, index) => (
+		data.map((ord, index) => (
 		    <tr key={ord.id}>
-		      <th scope="row">{index}</th>
+		      <th scope="row">{ord.id}</th>
 		      <td>{ord.fecha}</td>
 		      <td>{ord.idUsuario}</td>
 		      {ord.estado === 1 &&  <td className='text-info'>Solicitado</td>}
