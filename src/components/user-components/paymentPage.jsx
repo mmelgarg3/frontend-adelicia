@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import jwt_decode from "jwt-decode";
+
 
 
 
@@ -14,12 +16,43 @@ const PaymentPage = ()=>{
   const [checkedState, setCheckedState] = useState('');
   const [vuelto, setVuelto] = useState(0);
   const [show, setShow] = useState(false);
+  const [token, setToken] = useState('');
+  const [expire, setExpire] = useState('');
 
   const history = useHistory();
   const getData = ()=>{
     const data = window.localStorage.getItem('payment-order');
     if(data !== null) setPaymentOrder(JSON.parse(data));
   }
+
+  const refreshToken = async () => {
+      try {
+	  const response = await axios.get('http://localhost:5000/token');
+	  setToken(response.data.accessToken);
+	  const decoded = jwt_decode(response.data.accessToken);
+	  setExpire(decoded.exp);
+      } catch (error) {
+	  if (error.response) {
+	      history.push("/");
+	  }
+      }
+  }
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+	  const response = await axios.get('http://localhost:5000/token');
+	  config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+	  setToken(response.data.accessToken);
+	  const decoded = jwt_decode(response.data.accessToken);
+	  setExpire(decoded.exp);
+      }
+      return config;
+  }, (error) => {
+      return Promise.reject(error);
+  });
 
 
   const handleChange = (e) => {
@@ -73,14 +106,15 @@ const PaymentPage = ()=>{
   },[]);
 
 
-  const handleSubmit = async()=>{
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
     setShow(true);
     const CardNumber = val.replace(/\s/g, '');
     try{
-      await axios.post("http://localhost:3000/create-invoice",{
+      await axios.post("http://localhost:5000/create-invoice",{
 	total: paymentOrder.totalPedido,
 	idOrder: paymentOrder.id,
-	idTypePayment: 1,
+	idTypePayment: 2,
 	nCard: CardNumber 
       });
     }
@@ -94,13 +128,14 @@ const PaymentPage = ()=>{
     history.push("waiter-dash");
   }
 
-  const cashSubmit = async()=>{
+  const cashSubmit = async(e)=>{
+    e.preventDefault();
     setShow(true);
     try{
-      await axios.post("http://localhost:3000/create-invoice",{
+      await axios.post("http://localhost:5000/create-invoice",{
 	total: paymentOrder.totalPedido,
 	idOrder: paymentOrder.id,
-	idTypePayment: 2,
+	idTypePayment: 1,
 	nCard: 0 
       });
     }
@@ -118,7 +153,7 @@ const PaymentPage = ()=>{
   const changeAmount = (e)=>{
     var total = parseInt(paymentOrder.totalPedido);
     var amount = parseInt(e.target.value);
-    var vuelto = total - amount;
+    var vuelto = amount - total;
     setVuelto(vuelto);
   }
 
