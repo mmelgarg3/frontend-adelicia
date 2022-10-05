@@ -79,8 +79,18 @@ export default function ClientDash(){
         return Promise.reject(error);
     });
 
+  const cancelInApi = async(id)=>{
+    try{
+      await axios.post("http://localhost:5000/cancel-order",{
+	id: id
+      });
+    }catch(err){
+      console.log(err);
+    }
+
+  }
+
   const handleChange = (id)=>{
-    const new_arr = data;
     const updateObjectInArray = (id) => {
     setData(current =>
       current.map(obj => {
@@ -93,7 +103,7 @@ export default function ClientDash(){
       );
     };
     updateObjectInArray(id);
-    // setData(new_arr);
+    cancelInApi(id);
   }
 
   return(
