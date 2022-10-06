@@ -40,7 +40,8 @@ export default function Orders(){
     });
     const resp = await axios.post("http://localhost:5000/create-order",{
       userId: userId,
-      total: sum 
+      products: products,
+      total: sum,
     });
     window.localStorage.removeItem('orders');
     history.push("/client-dash");
