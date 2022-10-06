@@ -17,7 +17,7 @@ const Login = () => {
 				password: password,
 				role: role
 			});
-			if (role == 1) history.push("/register");
+			if (role == 1) history.push("/admin-dash");
 			if (role == 2) history.push("/cooking-page");
 			if (role == 3) history.push("/waiter-dash");
 			if (role == 4) history.push("/dashboard");
