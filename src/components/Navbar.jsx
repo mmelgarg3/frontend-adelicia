@@ -30,7 +30,7 @@ const Navbar = (show) => {
 	      <ul className="navbar-nav mr-auto">
 
 	      { showMe &&
-		<div class="container">
+		<div className="container">
 		  <li className="nav-item active">
 		    <a className="nav-link" href="/dashboard">Catalogo<span className="sr-only">(current)</span></a>
 		  </li>
