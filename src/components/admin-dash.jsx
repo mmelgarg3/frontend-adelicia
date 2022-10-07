@@ -6,6 +6,7 @@ const AdminDashboard = () => {
 
   const [data, setData] = useState([]);
   const [seletedOption, setSelectedOption] = useState(0);
+  const [refData, setRefData] = useState([]);
   const field = useRef(null);
 
   const getData = async()=>{
@@ -13,17 +14,17 @@ const AdminDashboard = () => {
       const response = await axios.get("http://localhost:5000/all-info");
       // setData(response.data);
       removeDuplicates(response.data);
+      removeDuplicates2(response.data);
     }catch(err){
       console.log(err);
     }
-
   }
 
   useEffect(()=>{
     getData();
   }, []);
 
-  const handleChange = (e)=>{
+    const handleChange = (e)=>{
     // console.log(e.target.value);
     setSelectedOption(e.target.value);
   }
@@ -31,6 +32,11 @@ const AdminDashboard = () => {
   function removeDuplicates(arr) {
     const new_arr =  arr.filter((item,index) => arr.indexOf(item) === index);
     setData(new_arr);
+  }
+
+  function removeDuplicates2(arr) {
+    const new_arr =  arr.filter((item,index) => arr.indexOf(item) === index);
+    setRefData(new_arr);
   }
 
   const filterByPedido = ()=>{
@@ -65,7 +71,6 @@ const AdminDashboard = () => {
   }
 
   const handleClick = (e)=>{
-    // console.log("en campo: ", field.current.value);
     if(seletedOption == 1){
       filterByProduct();
     }
@@ -76,9 +81,14 @@ const AdminDashboard = () => {
       filterByClient();
     }
     if(seletedOption == 0){
-      // console.log("ultima opcion");;
       getData();
     }
+  }
+
+
+  const handleReset = ()=>{
+    getData();
+    field.current.value = "";
   }
 
 
@@ -104,6 +114,7 @@ const AdminDashboard = () => {
 	</div>
 	<div className="col">
 	  <button className="btn btn-success" onClick={handleClick}>Filtrar</button>
+	  <button className="btn btn-danger ml-2" onClick={handleReset}>Reset</button>
 	</div>
       </div>
     </div>
