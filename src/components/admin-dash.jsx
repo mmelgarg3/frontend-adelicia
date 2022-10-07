@@ -32,7 +32,8 @@ const AdminDashboard = () => {
   const filterByPedido = ()=>{
     console.log(field.current.value);
     const new_arr = data.filter((el) => {
-      if(el.idPedido === field.current.value){
+      console.log("idP: ", el.idPedido);
+      if(parseInt(el.idPedido) === parseInt(field.current.value)){
 	return el;
       }
     });
@@ -42,7 +43,7 @@ const AdminDashboard = () => {
 
   const filterByProduct = ()=>{
     const new_arr = data.filter((el)=>{
-      if(el.idProducto === field.current.value){
+      if(parseInt(el.idProducto) === parseInt(field.current.value)){
 	return el;
       }
     });
