@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 const AdminDashboard = () => {
 
   const [data, setData] = useState([]);
+  const [seletedOption, setSelectedOption] = useState(1);
 
   const getData = async()=>{
     try{
@@ -21,6 +22,23 @@ const AdminDashboard = () => {
     getData();
   }, []);
 
+  const handleChange = (e)=>{
+    // console.log(e.target.value);
+    setSelectedOption(e.target.value);
+  }
+
+  const handleClick = (e)=>{
+    console.log(seletedOption);
+    if(seletedOption == 1){
+      console.log("opcion 1");
+    }
+    if(seletedOption == 2){
+      console.log("opcion 2");
+    }
+    if(seletedOption == 3){
+      console.log("opcon 3");
+    }
+  }
 
 
 
@@ -35,12 +53,15 @@ const AdminDashboard = () => {
 	</div>
 	<div className="col-md-5">
 	  <div className="form-group">
-	    <select className='form-control'>
+	    <select className='form-control' onChange={handleChange}>
 	      <option value="1">Filtrar por ID Producto</option>
 	      <option value="2">Filtrar por No. Pedido</option>
 	      <option value="3">Filtrar por Cliente</option>
 	    </select>
 	  </div>
+	</div>
+	<div className="col">
+	  <button className="btn btn-success" onClick={handleClick}>Filtrar</button>
 	</div>
       </div>
     </div>
