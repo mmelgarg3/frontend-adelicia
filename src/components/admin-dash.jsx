@@ -28,21 +28,21 @@ const AdminDashboard = () => {
     <>
     <div className="container" style={{marginTop: 80}}>
 	<div className="row">
-	  <div className="col-md-8 mx-auto">
+	  <div className="col-md-9 mx-auto">
 	      <table className="table table-striped">
 		<thead className="thead-dark">
 		  <tr className="text-center">
-		    <th scope="col">#</th>
+		    <th scope="col">No. Pedido</th>
 		    <th scope="col">Producto</th>
 		    <th scope="col">Descripcion</th>
-		    <th scope="col">Usuario</th>
+		    <th scope="col">Cliente</th>
 		    <th scope="col">Total del Pedido</th>
 		  </tr>
 		</thead>
 		<tbody className="text-center">
 		  {data.map((el, index) => (
 		    <tr key={el.idPedido}>
-		      <th scope="row">{index}</th>
+		      <th scope="row">{el.idPedido}</th>
 		      <td>{el.nombre}</td>
 		      <td>{el.descripcion}</td>
 		      <td>{el.Usuario}</td>
