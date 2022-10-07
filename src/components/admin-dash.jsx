@@ -5,14 +5,14 @@ import { useState, useEffect, useRef } from "react";
 const AdminDashboard = () => {
 
   const [data, setData] = useState([]);
-  const [seletedOption, setSelectedOption] = useState(1);
+  const [seletedOption, setSelectedOption] = useState(0);
   const field = useRef(null);
 
   const getData = async()=>{
     try{
       const response = await axios.get("http://localhost:5000/all-info");
-      setData(response.data);
-      console.log(response.data);
+      // setData(response.data);
+      removeDuplicates(response.data);
     }catch(err){
       console.log(err);
     }
@@ -28,16 +28,20 @@ const AdminDashboard = () => {
     setSelectedOption(e.target.value);
   }
 
+  function removeDuplicates(arr) {
+    const new_arr =  arr.filter((item,index) => arr.indexOf(item) === index);
+    setData(new_arr);
+  }
 
   const filterByPedido = ()=>{
-    console.log(field.current.value);
+    // console.log(field.current.value);
     const new_arr = data.filter((el) => {
-      console.log("idP: ", el.idPedido);
+      // console.log("idP: ", el.idPedido);
       if(parseInt(el.idPedido) === parseInt(field.current.value)){
 	return el;
       }
     });
-    console.log(new_arr);
+    // console.log(new_arr);
     setData(new_arr);
   }
 
@@ -61,16 +65,18 @@ const AdminDashboard = () => {
   }
 
   const handleClick = (e)=>{
-    console.log("en campo: ", field.current.value);
+    // console.log("en campo: ", field.current.value);
     if(seletedOption == 1){
       filterByProduct();
     }
-    else if(seletedOption == 2){
+    if(seletedOption == 2){
       filterByPedido();
     }
-    else if(seletedOption == 3){
+    if(seletedOption == 3){
       filterByClient();
-    }else{
+    }
+    if(seletedOption == 0){
+      // console.log("ultima opcion");;
       getData();
     }
   }
@@ -116,7 +122,7 @@ const AdminDashboard = () => {
 		</thead>
 		<tbody className="text-center">
 		  {data.map((el, index) => (
-		    <tr key={el.idPedido}>
+		    <tr key={el.idPedido+el.idProducto}>
 		      <th scope="row">{el.idPedido}</th>
 		      <td>{el.nombre}</td>
 		      <td>{el.descripcion}</td>
