@@ -9,6 +9,7 @@ import Orders from "./components/user-components/Orders";
 import CookingPage from "./components/user-components/CookingPage";
 import ClientDash from "./components/user-components/clientDash";
 import PaymentPage from "./components/user-components/paymentPage";
+import AdminNav from "./components/AdminNav";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Login/>
         </Route>
         <Route path="/register">
+          <AdminNav />
           <Register/>
         </Route>
         <Route path="/dashboard">
@@ -25,7 +27,7 @@ function App() {
           <Dashboard/>
         </Route>
 	<Route path="/admin-dash">
-	  <Navbar />
+	  <AdminNav />
 	  <AdminDashboard show={false}/>
 	</Route>
 	<Route path="/waiter-dash">
