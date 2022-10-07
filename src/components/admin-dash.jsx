@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 
 const AdminDashboard = () => {
 
   const [data, setData] = useState([]);
   const [seletedOption, setSelectedOption] = useState(1);
+  const field = useRef(null);
 
   const getData = async()=>{
     try{
@@ -27,16 +28,49 @@ const AdminDashboard = () => {
     setSelectedOption(e.target.value);
   }
 
+
+  const filterByPedido = ()=>{
+    console.log(field.current.value);
+    const new_arr = data.filter((el) => {
+      if(el.idPedido === field.current.value){
+	return el;
+      }
+    });
+    console.log(new_arr);
+    setData(new_arr);
+  }
+
+  const filterByProduct = ()=>{
+    const new_arr = data.filter((el)=>{
+      if(el.idProducto === field.current.value){
+	return el;
+      }
+    });
+    setData(new_arr);
+  }
+
+
+  const filterByClient = ()=>{
+    const new_arr = data.filter((el)=>{
+      if(el.Usuario === field.current.value){
+	return el;
+      }
+    });
+    setData(new_arr);
+  }
+
   const handleClick = (e)=>{
-    console.log(seletedOption);
+    console.log("en campo: ", field.current.value);
     if(seletedOption == 1){
-      console.log("opcion 1");
+      filterByProduct();
     }
-    if(seletedOption == 2){
-      console.log("opcion 2");
+    else if(seletedOption == 2){
+      filterByPedido();
     }
-    if(seletedOption == 3){
-      console.log("opcon 3");
+    else if(seletedOption == 3){
+      filterByClient();
+    }else{
+      getData();
     }
   }
 
@@ -48,12 +82,13 @@ const AdminDashboard = () => {
       <div className="row">
 	<div className="col-md-5">
 	  <div className="form-group">
-	    <input type="text" placeholder="Campo Requerido" className='form-control'/>
+	    <input type="text" ref={field} placeholder="Campo Requerido" className='form-control'/>
 	  </div>
 	</div>
 	<div className="col-md-5">
 	  <div className="form-group">
 	    <select className='form-control' onChange={handleChange}>
+	      <option value="0">Ver Todo</option>
 	      <option value="1">Filtrar por ID Producto</option>
 	      <option value="2">Filtrar por No. Pedido</option>
 	      <option value="3">Filtrar por Cliente</option>
