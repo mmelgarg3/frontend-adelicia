@@ -6,6 +6,7 @@ const AdminDashboard = () => {
 
   const [data, setData] = useState([]);
   const [seletedOption, setSelectedOption] = useState(0);
+  const [selectedItem, setSelectedItem] = useState('Ver todo');
   const [refData, setRefData] = useState([]);
   const field = useRef(null);
 
@@ -27,6 +28,7 @@ const AdminDashboard = () => {
     const handleChange = (e)=>{
     // console.log(e.target.value);
     setSelectedOption(e.target.value);
+    setSelectedItem(e.nativeEvent.target.text);
   }
 
   function removeDuplicates(arr) {
@@ -89,6 +91,7 @@ const AdminDashboard = () => {
   const handleReset = ()=>{
     getData();
     field.current.value = "";
+    setSelectedItem('Ver Todo')
   }
 
 
@@ -104,7 +107,7 @@ const AdminDashboard = () => {
 	</div>
 	<div className="col-md-5">
 	  <div className="form-group">
-	    <select className='form-control' onChange={handleChange}>
+	    <select className='form-control' onChange={handleChange} value={selectedItem}>
 	      <option value="0">Ver Todo</option>
 	      <option value="1">Filtrar por ID Producto</option>
 	      <option value="2">Filtrar por No. Pedido</option>
