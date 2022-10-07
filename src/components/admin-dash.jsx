@@ -129,6 +129,7 @@ const AdminDashboard = () => {
 		  <tr className="text-center">
 		    <th scope="col">No. Pedido</th>
 		    <th scope="col">Producto</th>
+		    <th scope="col">Fecha</th>
 		    <th scope="col">Descripcion</th>
 		    <th scope="col">Cliente</th>
 		    <th scope="col">Total del Pedido</th>
@@ -139,6 +140,7 @@ const AdminDashboard = () => {
 		    <tr key={el.idPedido+el.idProducto}>
 		      <th scope="row">{el.idPedido}</th>
 		      <td>{el.nombre}</td>
+		      <td>{el.fecha}</td>
 		      <td>{el.descripcion}</td>
 		      <td>{el.Usuario}</td>
 		      <td>Q.{el.totalPedido}</td>
