@@ -26,6 +26,24 @@ const AdminDashboard = () => {
 
   return(
     <>
+    <div className="container" style={{marginTop: 35}}>
+      <div className="row">
+	<div className="col-md-5">
+	  <div className="form-group">
+	    <input type="text" placeholder="Campo Requerido" className='form-control'/>
+	  </div>
+	</div>
+	<div className="col-md-5">
+	  <div className="form-group">
+	    <select className='form-control'>
+	      <option value="1">Filtrar por ID Producto</option>
+	      <option value="2">Filtrar por No. Pedido</option>
+	      <option value="3">Filtrar por Cliente</option>
+	    </select>
+	  </div>
+	</div>
+      </div>
+    </div>
     <div className="container" style={{marginTop: 80}}>
 	<div className="row">
 	  <div className="col-md-9 mx-auto">
