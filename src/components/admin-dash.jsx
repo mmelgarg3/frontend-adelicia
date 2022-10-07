@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 
 const AdminDashboard = () => {
 
+  const [data, setData] = useState([]);
+
   const getData = async()=>{
     try{
       const response = await axios.get("http://localhost:5000/all-info");
-      console.log(response);
+      setData(response.data);
+      console.log(response.data);
     }catch(err){
       console.log(err);
     }
@@ -16,16 +19,39 @@ const AdminDashboard = () => {
 
   useEffect(()=>{
     getData();
-  });
+  }, []);
 
 
 
 
   return(
     <>
-      <div className="container">
+    <div className="container" style={{marginTop: 80}}>
 	<div className="row">
-	  <h2>Vista de Administrador</h2>
+	  <div className="col-md-8 mx-auto">
+	      <table className="table table-striped">
+		<thead className="thead-dark">
+		  <tr className="text-center">
+		    <th scope="col">#</th>
+		    <th scope="col">Producto</th>
+		    <th scope="col">Descripcion</th>
+		    <th scope="col">Usuario</th>
+		    <th scope="col">Total del Pedido</th>
+		  </tr>
+		</thead>
+		<tbody className="text-center">
+		  {data.map((el, index) => (
+		    <tr key={el.idPedido}>
+		      <th scope="row">{index}</th>
+		      <td>{el.nombre}</td>
+		      <td>{el.descripcion}</td>
+		      <td>{el.Usuario}</td>
+		      <td>Q.{el.totalPedido}</td>
+		    </tr>
+		  ))}
+		</tbody>
+	      </table>
+	    </div>
 	</div>
       </div>
     </>
