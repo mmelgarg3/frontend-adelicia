@@ -19,9 +19,10 @@ const AdminNav = () => {
     return (
       <>
 	<nav className="navbar navbar-expand-lg navbar-light bg-light">
-	  <a className="navbar-brand" href="/dashboard">Adelicia's Restaurant
+	  <a className="navbar-brand" href="/dashboard">
 	    <img src="https://github.com/Olivers11/Images/blob/master/adlicias_background-removebg-preview.png?raw=true" 
 	  alt="logo" className='d-inline-block align-top' style={{width: 30, marginRight: 10, objectFit: 'cover'}}/>
+	  Adelicia's Restaurant
 	  </a>
 	  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span className="navbar-toggler-icon"></span>
