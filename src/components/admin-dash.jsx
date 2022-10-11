@@ -16,6 +16,7 @@ const AdminDashboard = () => {
       // setData(response.data);
       removeDuplicates(response.data);
       removeDuplicates2(response.data);
+      console.log(response.data);
     }catch(err){
       console.log(err);
     }
@@ -124,13 +125,14 @@ const AdminDashboard = () => {
     <div className="container" style={{marginTop: 80}}>
 	<div className="row">
 	  <div className="col-md-9 mx-auto">
-	      <table className="table table-striped">
+	      <table className="table table-striped table-bordered">
 		<thead className="thead-dark">
 		  <tr className="text-center">
 		    <th scope="col">No. Pedido</th>
 		    <th scope="col">Producto</th>
 		    <th scope="col">Fecha</th>
 		    <th scope="col">Descripcion</th>
+		    <th scope="col">Estado</th>
 		    <th scope="col">Cliente</th>
 		    <th scope="col">Total del Pedido</th>
 		  </tr>
@@ -141,7 +143,13 @@ const AdminDashboard = () => {
 		      <th scope="row">{el.idPedido}</th>
 		      <td>{el.nombre}</td>
 		      <td>{el.fecha}</td>
-		      <td>{el.descripcion}</td>
+		    <td style={{textAlign: "justify"}}>{el.descripcion}</td>
+		      {el.estado === 1 &&  <td className='text-info'>Solicitado</td>}
+		      {el.estado === 2 &&  <td className='text-primary'>Cocinando</td>}
+		      {el.estado === 3 &&  <td className="text-warning">Cocinado</td>}
+		      {el.estado === 5 &&  <td className='text-danger'>Cancelado</td>}
+		      {el.estado === 4 &&  <td className='text-success'>Entregado</td>}
+
 		      <td>{el.Usuario}</td>
 		      <td>Q.{el.totalPedido}</td>
 		    </tr>
