@@ -38,6 +38,7 @@ export default function Orders(){
       console.log(el);
       sum += parseInt(el.precio);
     });
+    console.log(sum);
     const resp = await axios.post("http://localhost:5000/create-order",{
       userId: userId,
       products: products,
@@ -78,11 +79,6 @@ export default function Orders(){
         return Promise.reject(error);
     });
 
-  const handleClickOrders = ()=>{
-    history.push("client-dash");
-  }
-
-
 
   return(
     <>
@@ -96,10 +92,6 @@ export default function Orders(){
 	I did it!
       </SweetAlert>
     }
-    <button onClick={handleClickOrders} 
-      className="btn btn-warning text-white" style={{position: 'absolute', top: 80, right: 20}}>
-      Ver Pedidos en Espera
-    </button>
       <h2 className="card-title ml-4 mt-4 text-primary">Mis Pedidos</h2>
       <div className="container" style={{marginTop: 80}}>
 	<div className="row">
