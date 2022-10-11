@@ -16,7 +16,7 @@ export default function WaiterDashboard(){
 
   const refreshToken = async () => {
       try {
-	  const response = await axios.get('http://localhost:5000/token');
+	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
 	  setToken(response.data.accessToken);
 	  const decoded = jwt_decode(response.data.accessToken);
 	  setExpire(decoded.exp);
@@ -32,7 +32,7 @@ export default function WaiterDashboard(){
   axiosJWT.interceptors.request.use(async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-	  const response = await axios.get('http://localhost:5000/token');
+	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
 	  config.headers.Authorization = `Bearer ${response.data.accessToken}`;
 	  setToken(response.data.accessToken);
 	  const decoded = jwt_decode(response.data.accessToken);
@@ -44,7 +44,7 @@ export default function WaiterDashboard(){
   });
 
   const getOrders = async () => {
-      const response = await axios.get('http://localhost:5000/orders', {
+      const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/orders', {
 	params: {
 	  estado: 3
 	},
@@ -62,7 +62,7 @@ export default function WaiterDashboard(){
 
     removeOrder(id);
     try{
-      await axios.post('http://localhost:5000/check-order',{
+      await axios.post('https://adelicias-backend-app.azurewebsites.net/check-order',{
 	query: {
 	  id: id
 	}

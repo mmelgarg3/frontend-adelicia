@@ -11,7 +11,7 @@ const Navbar = (show) => {
 	window.localStorage.removeItem("userID");
 
         try {
-            await axios.delete('http://localhost:5000/logout');
+            await axios.delete('https://adelicias-backend-app.azurewebsites.net/logout');
             history.push("/");
         } catch (error) {
             console.log(error);

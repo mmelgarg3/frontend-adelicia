@@ -39,7 +39,7 @@ export default function Orders(){
       sum += parseInt(el.precio);
     });
     console.log(sum);
-    const resp = await axios.post("http://localhost:5000/create-order",{
+    const resp = await axios.post("https://adelicias-backend-app.azurewebsites.net/create-order",{
       userId: userId,
       products: products,
       total: sum,
@@ -50,7 +50,7 @@ export default function Orders(){
 
   const refreshToken = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/token');
+            const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
             setExpire(decoded.exp);
@@ -67,7 +67,7 @@ export default function Orders(){
     axiosJWT.interceptors.request.use(async (config) => {
         const currentDate = new Date();
         if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('http://localhost:5000/token');
+            const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
             config.headers.Authorization = `Bearer ${response.data.accessToken}`;
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);

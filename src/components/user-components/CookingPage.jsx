@@ -18,7 +18,7 @@ export default function CookingPage(){
 
   const refreshToken = async () => {
       try {
-	  const response = await axios.get('http://localhost:5000/token');
+	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
 	  setToken(response.data.accessToken);
 	  const decoded = jwt_decode(response.data.accessToken);
 	  setExpire(decoded.exp);
@@ -34,7 +34,7 @@ export default function CookingPage(){
   axiosJWT.interceptors.request.use(async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-	  const response = await axios.get('http://localhost:5000/token');
+	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
 	  config.headers.Authorization = `Bearer ${response.data.accessToken}`;
 	  setToken(response.data.accessToken);
 	  const decoded = jwt_decode(response.data.accessToken);
@@ -46,7 +46,7 @@ export default function CookingPage(){
   });
 
   const getOrders = async () => {
-      const response = await axios.get('http://localhost:5000/orders',{
+      const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/orders',{
       params: {
         estado: 1
       }
@@ -58,7 +58,7 @@ export default function CookingPage(){
 
 
   const getOthersOrders = async()=>{
-      const response = await axios.get('http://localhost:5000/orders',{
+      const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/orders',{
       params: {
         estado: 2
       }
@@ -85,7 +85,7 @@ export default function CookingPage(){
 
     removeOrder(id);
     try{
-      await axios.post('http://localhost:5000/change-status',{
+      await axios.post('https://adelicias-backend-app.azurewebsites.net/change-status',{
 	id: id
       });
     }catch(err){
@@ -98,7 +98,7 @@ export default function CookingPage(){
     const new_arr = orders2.filter(el => el.id !== id)
     setOrders2(new_arr);
     try{
-      await axios.post('http://localhost:5000/finish-order',{
+      await axios.post('https://adelicias-backend-app.azurewebsites.net/finish-order',{
 	id: id
       });
     }catch(err){

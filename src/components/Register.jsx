@@ -20,7 +20,7 @@ const Register = () => {
 	const Register = async (e) => {
 		e.preventDefault();
 		try {
-			await axios.post('http://localhost:5000/users', {
+			await axios.post('https://adelicias-backend-app.azurewebsites.net/users', {
 				name: name,
 				surname: surname,
 				email: email,

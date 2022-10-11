@@ -12,7 +12,7 @@ const AdminDashboard = () => {
 
   const getData = async()=>{
     try{
-      const response = await axios.get("http://localhost:5000/all-info");
+      const response = await axios.get("https://adelicias-backend-app.azurewebsites.net/all-info");
       // setData(response.data);
       removeDuplicates(response.data);
       removeDuplicates2(response.data);
