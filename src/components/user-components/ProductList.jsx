@@ -46,7 +46,7 @@ const ProductList = () => {
             setExpire(decoded.exp);
         } catch (error) {
             if (error.response) {
-                history.push("/");
+                // history.push("/");
 		console.log(error.response);
             }
         }
