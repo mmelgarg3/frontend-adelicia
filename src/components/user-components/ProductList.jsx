@@ -69,11 +69,7 @@ const ProductList = () => {
     });
 
     const getProducts = async () => {
-        const response = await axiosJWT.get('https://adelicias-backend-app.azurewebsites.net/products', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+        const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/products');
         setProducts(response.data);
     }
 
