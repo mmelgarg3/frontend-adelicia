@@ -47,6 +47,7 @@ const ProductList = () => {
         } catch (error) {
             if (error.response) {
                 history.push("/");
+		console.log(error.response);
             }
         }
     }
