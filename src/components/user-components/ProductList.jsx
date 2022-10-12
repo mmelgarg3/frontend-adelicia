@@ -37,6 +37,7 @@ const ProductList = () => {
     const refreshToken = async () => {
         try {
             const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
+	    console.log(response.data);
             setToken(response.data.accessToken);
             const decoded = jwt_decode(response.data.accessToken);
 	    setUserId(decoded.userId);
