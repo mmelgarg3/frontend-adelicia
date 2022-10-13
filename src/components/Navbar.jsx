@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 const Navbar = (show) => {
@@ -8,13 +7,9 @@ const Navbar = (show) => {
 
     const Logout = async () => {
 	window.localStorage.removeItem("userID");
-
-        try {
-            await axios.delete('https://adelicias-backend-app.azurewebsites.net/logout');
-            history.push("/");
-        } catch (error) {
-            console.log(error);
-        }
+	window.localStorage.removeItem("user");
+	history.push("/");
+        
     }
     
     return (
