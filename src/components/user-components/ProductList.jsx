@@ -1,18 +1,15 @@
 
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import jwt_decode from "jwt-decode";
 import { useHistory } from 'react-router-dom';
 import './style/ProductStyle.css';
+import {api_route} from './../../environment.js';
 
 const ProductList = () => {
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
-    const [token, setToken] = useState('');
-    const [expire, setExpire] = useState('');
     const [products, setProducts] = useState([]);
     const [orders, setOrders] = useState([]);
-    const [userId, setUserId] = useState('');
     const history = useHistory();
 
 
@@ -29,49 +26,14 @@ const ProductList = () => {
 
 
     useEffect(() => {
-        refreshToken();
 	getProducts();
 	window.addEventListener('scroll', handleVisibleButton)
     }, []);
 
-    const refreshToken = async () => {
-        try {
-            const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-	    console.log(response.data);
-            setToken(response.data.accessToken);
-            const decoded = jwt_decode(response.data.accessToken);
-	    setUserId(decoded.userId);
-	    window.localStorage.setItem('userID', JSON.stringify(decoded.userId));
-	    setSurname(decoded.surname);
-            setName(decoded.name);
-            setExpire(decoded.exp);
-        } catch (error) {
-            if (error.response) {
-                // history.push("/");
-		console.log(error.response);
-            }
-        }
-    }
-
-    const axiosJWT = axios.create();
-
-    axiosJWT.interceptors.request.use(async (config) => {
-        const currentDate = new Date();
-        if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-            config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-            setToken(response.data.accessToken);
-            const decoded = jwt_decode(response.data.accessToken);
-            setName(decoded.name);
-            setExpire(decoded.exp);
-        }
-        return config;
-    }, (error) => {
-        return Promise.reject(error);
-    });
+   
 
     const getProducts = async () => {
-        const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/products');
+        const response = await axios.get(`${api_route}/products`);
         setProducts(response.data);
     }
 
