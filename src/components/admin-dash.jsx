@@ -13,7 +13,6 @@ const AdminDashboard = () => {
   const getData = async()=>{
     try{
       const response = await axios.get("https://adelicias-backend-app.azurewebsites.net/all-info");
-      // setData(response.data);
       removeDuplicates(response.data);
       removeDuplicates2(response.data);
       console.log(response.data);
@@ -43,14 +42,11 @@ const AdminDashboard = () => {
   }
 
   const filterByPedido = ()=>{
-    // console.log(field.current.value);
     const new_arr = data.filter((el) => {
-      // console.log("idP: ", el.idPedido);
       if(parseInt(el.idPedido) === parseInt(field.current.value)){
 	return el;
       }
     });
-    // console.log(new_arr);
     setData(new_arr);
   }
 
