@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
+import {api_route} from './../environment.js';
 
 
 const AdminDashboard = () => {
@@ -12,7 +13,7 @@ const AdminDashboard = () => {
 
   const getData = async()=>{
     try{
-      const response = await axios.get("https://adelicias-backend-app.azurewebsites.net/all-info");
+      const response = await axios.get(`${api_route}/all-info`);
       removeDuplicates(response.data);
       removeDuplicates2(response.data);
       console.log(response.data);
