@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { api_route } from './../environment.js';
 
 const Login = () => {
 	const [email, setEmail] = useState('');
@@ -12,18 +13,24 @@ const Login = () => {
 	const Auth = async (e) => {
 		e.preventDefault();
 		try {
-			await axios.post('https://adelicias-backend-app.azurewebsites.net/login', {
+			const response = await axios.post(`${api_route}/Login`, {
 				email: email,
 				password: password,
 				role: role
 			});
+			const user = {
+			  userId: response.data.userId,
+			  userName: response.data.name,
+			  userEmail: response.data.email
+			}
+			window.localStorage.setItem(user, 'user');
 			if (role == 1) history.push("/admin-dash");
 			if (role == 2) history.push("/cooking-page");
 			if (role == 3) history.push("/waiter-dash");
 			if (role == 4) history.push("/dashboard");
 		} catch (error) {
 			if (error.response) {
-				setMsg(error.response.data.msg);
+			    setMsg(error.response.data.msg);
 			}
 		}
 	}
