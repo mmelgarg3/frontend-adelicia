@@ -1,75 +1,23 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import {api_route} from "././../environment.js";
 
 export default function WaiterDashboard(){
-  const [token, setToken] = useState('');
-  const [expire, setExpire] = useState('');
   const [orders, setOrders] = useState([]);
   const history = useHistory();
 
   useEffect(()=>{
     getOrders();
-    refreshToken();
   }, []);
 
-  const refreshToken = async () => {
-      try {
-	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-	  setToken(response.data.accessToken);
-	  const decoded = jwt_decode(response.data.accessToken);
-	  setExpire(decoded.exp);
-      } catch (error) {
-	  if (error.response) {
-	      history.push("/");
-	  }
-      }
-  }
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-	  config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-	  setToken(response.data.accessToken);
-	  const decoded = jwt_decode(response.data.accessToken);
-	  setExpire(decoded.exp);
-      }
-      return config;
-  }, (error) => {
-      return Promise.reject(error);
-  });
-
   const getOrders = async () => {
-      const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/orders', {
+      const response = await axios.get(`${api_route}/orders`, {
 	params: {
 	  estado: 3
 	},
       });
       setOrders(response.data);
-  }
-
-  const removeOrder = (id)=>{
-    console.log("id to delete: ", id);
-    const new_arr = orders.filter(el => el.id !== id)
-    setOrders(new_arr);
-  }
-
-  const handleClick = async( id)=>{
-
-    removeOrder(id);
-    try{
-      await axios.post('https://adelicias-backend-app.azurewebsites.net/check-order',{
-	query: {
-	  id: id
-	}
-      });
-    }catch(err){
-      console.log(err);
-    }
   }
 
 
