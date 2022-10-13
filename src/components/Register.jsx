@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import {api_route} from './../environment.js';
 
 const Register = () => {
 	const [ name, setName ] = useState('');
@@ -20,7 +21,7 @@ const Register = () => {
 	const Register = async (e) => {
 		e.preventDefault();
 		try {
-			await axios.post('https://adelicias-backend-app.azurewebsites.net/users', {
+			await axios.post(`${api_route}/users`, {
 				name: name,
 				surname: surname,
 				email: email,
@@ -30,7 +31,7 @@ const Register = () => {
 			history.push('/');
 		} catch (error) {
 			if (error.response) {
-				setMsg(error.response.data.msg);
+			  setMsg(error.response.data.msg);
 			}
 		}
 	};
