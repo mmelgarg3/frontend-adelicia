@@ -7,7 +7,6 @@ import {api_route} from './../../environment.js';
 
 const ProductList = () => {
     const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
     const [products, setProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const history = useHistory();
@@ -35,7 +34,10 @@ const ProductList = () => {
     const getProducts = async () => {
         const response = await axios.get(`${api_route}/products`);
         setProducts(response.data);
+	const data = window.localStorage.getItem('user');
+	if(data !== null) setName(JSON.parse(data).userName);
     }
+
 
 
     const handleAdd = (e, prd)=>{
@@ -63,7 +65,7 @@ const ProductList = () => {
 
             <h4>
 		Bienvenido a Adelicia's Restaurant: 
-		<b>{name} {surname}</b>
+		<b> {name}</b>
 	    </h4>
 
 	    <div className="row row-cols-1 row-cols-md-3" 

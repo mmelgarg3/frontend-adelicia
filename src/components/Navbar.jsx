@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 const Navbar = (show) => {
-    console.log(show.show);
     const history = useHistory();
     const [showMe, setShowMe] = useState(show.show);
 

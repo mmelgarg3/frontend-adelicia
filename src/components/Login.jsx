@@ -23,7 +23,7 @@ const Login = () => {
 			  userName: response.data.name,
 			  userEmail: response.data.email
 			}
-			window.localStorage.setItem(user, 'user');
+			window.localStorage.setItem('user', JSON.stringify(user));
 			if (role == 1) history.push("/admin-dash");
 			if (role == 2) history.push("/cooking-page");
 			if (role == 3) history.push("/waiter-dash");
