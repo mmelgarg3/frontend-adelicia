@@ -2,10 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import SweetAlert from 'react-bootstrap-sweetalert';
-import jwt_decode from "jwt-decode";
-
-
-
+import {api_route} from './../../environment.js';
 
 const PaymentPage = ()=>{
 
@@ -16,44 +13,12 @@ const PaymentPage = ()=>{
   const [checkedState, setCheckedState] = useState('');
   const [vuelto, setVuelto] = useState(0);
   const [show, setShow] = useState(false);
-  const [token, setToken] = useState('');
-  const [expire, setExpire] = useState('');
 
   const history = useHistory();
   const getData = ()=>{
     const data = window.localStorage.getItem('payment-order');
     if(data !== null) setPaymentOrder(JSON.parse(data));
   }
-
-  const refreshToken = async () => {
-      try {
-	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-	  setToken(response.data.accessToken);
-	  const decoded = jwt_decode(response.data.accessToken);
-	  setExpire(decoded.exp);
-      } catch (error) {
-	  if (error.response) {
-	      history.push("/");
-	  }
-      }
-  }
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-	  config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-	  setToken(response.data.accessToken);
-	  const decoded = jwt_decode(response.data.accessToken);
-	  setExpire(decoded.exp);
-      }
-      return config;
-  }, (error) => {
-      return Promise.reject(error);
-  });
-
 
   const handleChange = (e) => {
     setVal(e.target.value);
@@ -111,7 +76,7 @@ const PaymentPage = ()=>{
     setShow(true);
     const CardNumber = val.replace(/\s/g, '');
     try{
-      await axios.post("https://adelicias-backend-app.azurewebsites.net/create-invoice",{
+      await axios.post(`${api_route}/create-invoice`,{
 	total: paymentOrder.totalPedido,
 	idOrder: paymentOrder.id,
 	idTypePayment: 2,
@@ -132,7 +97,7 @@ const PaymentPage = ()=>{
     e.preventDefault();
     setShow(true);
     try{
-      await axios.post("https://adelicias-backend-app.azurewebsites.net/create-invoice",{
+      await axios.post(`${api_route}/create-invoice`,{
 	total: paymentOrder.totalPedido,
 	idOrder: paymentOrder.id,
 	idTypePayment: 1,
