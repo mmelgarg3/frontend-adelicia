@@ -1,55 +1,22 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import {api_route} from './../../environment.js';
 
 export default function CookingPage(){
-  const [token, setToken] = useState('');
-  const [expire, setExpire] = useState('');
   const [orders, setOrders] = useState([]);
   const [orders2, setOrders2] = useState([]);
-  const history = useHistory();
 
   useEffect(()=>{
     getOrders();
     getOthersOrders();
-    refreshToken();
   }, []);
 
-  const refreshToken = async () => {
-      try {
-	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-	  setToken(response.data.accessToken);
-	  const decoded = jwt_decode(response.data.accessToken);
-	  setExpire(decoded.exp);
-      } catch (error) {
-	  if (error.response) {
-	      history.push("/");
-	  }
-      }
-  }
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-	  const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-	  config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-	  setToken(response.data.accessToken);
-	  const decoded = jwt_decode(response.data.accessToken);
-	  setExpire(decoded.exp);
-      }
-      return config;
-  }, (error) => {
-      return Promise.reject(error);
-  });
-
   const getOrders = async () => {
-      const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/orders',{
-      params: {
-        estado: 1
-      }
+      const response = await axios.get(`${api_route}/orders`,{
+	params: {
+	  estado: 1
+	}
       });
       console.log(response.data);
       setOrders(response.data);
@@ -58,7 +25,7 @@ export default function CookingPage(){
 
 
   const getOthersOrders = async()=>{
-      const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/orders',{
+      const response = await axios.get(`${api_route}/orders`,{
       params: {
         estado: 2
       }
@@ -85,7 +52,7 @@ export default function CookingPage(){
 
     removeOrder(id);
     try{
-      await axios.post('https://adelicias-backend-app.azurewebsites.net/change-status',{
+      await axios.post(`${api_route}/change-status`,{
 	id: id
       });
     }catch(err){
@@ -98,7 +65,7 @@ export default function CookingPage(){
     const new_arr = orders2.filter(el => el.id !== id)
     setOrders2(new_arr);
     try{
-      await axios.post('https://adelicias-backend-app.azurewebsites.net/finish-order',{
+      await axios.post(`${api_route}/finish-order`,{
 	id: id
       });
     }catch(err){
