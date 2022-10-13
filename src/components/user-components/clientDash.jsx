@@ -1,26 +1,21 @@
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router";
 import './style/clientDash.css'
+import { api_route } from './../../environment.js';
 
 export default function ClientDash(){
 
-  const [token, setToken] = useState('');
-  const [expire, setExpire] = useState('');
   const [userId, setUserId] = useState('');
   const [run, setRun] = useState(true);
-  const history = useHistory();
   const [data, setData] = useState([]);
 
 
   const getData = async () => {
-    const id = window.localStorage.getItem('userID');
-    if(id !== null) setUserId(JSON.parse(id));
-    console.log(id);
-    const response = await axios.get("https://adelicias-backend-app.azurewebsites.net/all-orders",{
+    const id_data = window.localStorage.getItem('user');
+    if(id_data !== null) setUserId(JSON.parse(id_data).userId);
+    const response = await axios.get(`${api_route}/all-orders`,{
 	params:{
-	  id: parseInt(id) 
+	  id: parseInt(JSON.parse(id_data).userId) 
 	}
     });
     if(response.data.length == 0){
@@ -46,42 +41,9 @@ export default function ClientDash(){
 
 
 
-  const refreshToken = async () => {
-	try {
-            const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-            setToken(response.data.accessToken);
-            const decoded = jwt_decode(response.data.accessToken);
-            setExpire(decoded.exp);
-	    setUserId(decoded.userId);
-	    console.log("result in method", userId);
-	    console.log(decoded, " is in first execution");
-        } catch (error) {
-            if (error.response) {
-                history.push("/");
-            }
-        }
-    }
-
-    const axiosJWT = axios.create();
-
-    axiosJWT.interceptors.request.use(async (config) => {
-        const currentDate = new Date();
-        if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('https://adelicias-backend-app.azurewebsites.net/token');
-            config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-            setToken(response.data.accessToken);
-            const decoded = jwt_decode(response.data.accessToken);
-	    setUserId(decoded.userId);
-            setExpire(decoded.exp);
-        }
-        return config;
-    }, (error) => {
-        return Promise.reject(error);
-    });
-
   const cancelInApi = async(id)=>{
     try{
-      await axios.post("http://localhost:5000/cancel-order",{
+      await axios.post(`${api_route}/cancel-order`,{
 	id: id
       });
     }catch(err){
