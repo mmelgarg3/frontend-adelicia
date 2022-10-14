@@ -10,11 +10,15 @@ import CookingPage from "./components/user-components/CookingPage";
 import ClientDash from "./components/user-components/clientDash";
 import PaymentPage from "./components/user-components/paymentPage";
 import AdminNav from "./components/AdminNav";
+import './components/user-components/style/logo.css';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
+
+	<img id="logo" src="https://github.com/Olivers11/Images/blob/master/adlicias_background-removebg-preview.png?raw=true" 
+alt=""/>
         <Route exact path="/">
           <Login/>
         </Route>
