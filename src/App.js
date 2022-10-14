@@ -10,44 +10,49 @@ import CookingPage from "./components/user-components/CookingPage";
 import ClientDash from "./components/user-components/clientDash";
 import PaymentPage from "./components/user-components/paymentPage";
 import AdminNav from "./components/AdminNav";
-import './components/user-components/style/logo.css';
+import Logo from './components/Logo';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-
-	<img id="logo" src="https://github.com/Olivers11/Images/blob/master/adlicias_background-removebg-preview.png?raw=true" 
-alt=""/>
         <Route exact path="/">
+	  <Logo />
           <Login/>
         </Route>
         <Route path="/register">
+	  <Logo />
           <AdminNav />
           <Register/>
         </Route>
         <Route path="/dashboard">
           <Navbar show={true} />
+	  <Logo />
           <Dashboard/>
         </Route>
 	<Route path="/admin-dash">
 	  <AdminNav />
+	  <Logo />
 	  <AdminDashboard show={false}/>
 	</Route>
 	<Route path="/waiter-dash">
 	  <Navbar />
+	  <Logo />
 	  <WaiterDashboard show={false}/>
 	</Route>
 	<Route path="/orders">
 	  <Navbar show={true}/>
+	  <Logo />
 	  <Orders />
 	</Route>
 	<Route path="/cooking-page">
 	  <Navbar show={false}/>
+	  <Logo />
 	  <CookingPage />
 	</Route>
 	<Route path="/client-dash">
 	  <Navbar show={true}/>
+	  <Logo />
 	  <ClientDash />
 	</Route>
 	<Route path="/payment-page">
