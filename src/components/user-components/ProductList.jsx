@@ -57,10 +57,7 @@ const ProductList = () => {
     return (
       <>
 	<div className="container mt-5">
-	  <img 
-      src="https://github.com/Olivers11/Images/blob/master/adlicias_background-removebg-preview.png?raw=true" 
-	  id="img-logo"
-	  />
+	  
 	
 	  <button className="btn btn-success"  onClick={verPedidos}
 	    style={{position: 'absolute', right: 30, top: 90}}> 
