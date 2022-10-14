@@ -15,3 +15,12 @@
   display: none;
 }
 
+
+#img-logo{
+  display: block !important;
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 300px;
+  height: 300px;
+}

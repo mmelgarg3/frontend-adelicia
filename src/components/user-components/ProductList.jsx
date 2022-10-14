@@ -57,11 +57,16 @@ const ProductList = () => {
     return (
       <>
 	<div className="container mt-5">
-	<button className="btn btn-success"  onClick={verPedidos}
-	  style={{position: 'absolute', right: 30, top: 90}}> 
-	  <i className="fas fa-cart-shopping mr-2"></i> 
-	  Pedidos: {orders.length}
-	</button>
+	  <img 
+      src="https://github.com/Olivers11/Images/blob/master/adlicias_background-removebg-preview.png?raw=true" 
+	  id="img-logo"
+	  />
+	
+	  <button className="btn btn-success"  onClick={verPedidos}
+	    style={{position: 'absolute', right: 30, top: 90}}> 
+	    <i className="fas fa-cart-shopping mr-2"></i> 
+	    Pedidos: {orders.length}
+	  </button>
 
             <h4>
 		Bienvenido a Adelicia's Restaurant: 
