@@ -136,7 +136,7 @@ const AdminDashboard = () => {
 		</thead>
 		<tbody className="text-center">
 		  {data.map((el, index) => (
-		    <tr key={el.idPedido+el.idProducto}>
+		    <tr key={el.idPedido+el.idProducto + el.nombre[2]}>
 		      <th scope="row">{el.idPedido}</th>
 		      <td>{el.nombre}</td>
 		      <td>{el.fecha}</td>
