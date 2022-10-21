@@ -44,7 +44,7 @@ const AdminDashboard = () => {
 
   const filterByPedido = ()=>{
     const new_arr = data.filter((el) => {
-      if(parseInt(el.idPedido) === parseInt(field.current.value)){
+      if(el.nombre === field.current.value){
 	return el;
       }
     });
